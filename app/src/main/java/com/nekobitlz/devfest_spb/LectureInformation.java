@@ -1,10 +1,17 @@
 package com.nekobitlz.devfest_spb;
 
+import java.io.Serializable;
+
 /*
     Class for storing lecture data
 */
-public class LectureInformation {
-    private String speakerName, date, address, title, label, description;
+public class LectureInformation implements Serializable {
+    private String speakerName;
+    private String date;
+    private String address;
+    private String title;
+    private String label;
+    private String description;
 
     /*
         Lecture initialization
