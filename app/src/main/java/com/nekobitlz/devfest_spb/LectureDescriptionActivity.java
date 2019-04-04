@@ -49,7 +49,7 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
     */
     private void setup(LectureInformation currentLectureInformation) {
         //sets label background color
-        if (currentLectureInformation.getLabel().equals("Android")) {
+        if (android.text.TextUtils.equals(currentLectureInformation.getLabel(), "Android")) {
             label.setBackgroundColor(Color.parseColor("#ff460e"));
         } else {
             label.setBackgroundColor(Color.parseColor("#0e6bff"));
