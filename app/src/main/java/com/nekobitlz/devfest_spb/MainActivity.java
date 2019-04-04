@@ -18,9 +18,13 @@ import java.util.ArrayList;
 */
 public class MainActivity extends AppCompatActivity {
     private ArrayList<LectureInformation> lecturesInformation;
-    private String speakerName, date, address, title, label, description;
 
-    private static LectureInformation currentLectureInformation;
+    private String speakerName;
+    private String date;
+    private String address;
+    private String title;
+    private String label;
+    private String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         parseXml(lectureParser);
 
         final ArrayAdapter<LectureInformation> adapter = new InformationAdapter(this);
-        lecturesList.setAdapter(adapter); //
+        lecturesList.setAdapter(adapter);
 
         lecturesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -43,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
                                     long id) {
                 //If user has clicked on one of the list items,
                 // he is transferred to the page with the selected lecture
-                currentLectureInformation = lecturesInformation.get(position);
+                Intent intent = new Intent(getBaseContext(), LectureDescriptionActivity.class);
 
-                startActivity(new Intent(getBaseContext(), LectureDescriptionActivity.class));
+                intent.putExtra("LectureInformation", lecturesInformation.get(position));
+                startActivity(intent);
                 finish();
             }
         });
@@ -77,13 +82,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,
                     "Error loading XML-document: " + t.toString(), Toast.LENGTH_LONG).show();
         }
-    }
-
-    /*
-       Gets the last selected lecture
-    */
-    protected static LectureInformation getCurrentLectureInformation() {
-        return currentLectureInformation;
     }
 
     /*

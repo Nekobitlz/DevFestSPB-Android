@@ -2,21 +2,25 @@ package com.nekobitlz.devfest_spb;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.nekobitlz.devfest_spb.MainActivity.getCurrentLectureInformation;
-
 /*
     Activity with full information about the selected lecture
 */
 public class LectureDescriptionActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button label, mainMenu;
-    private TextView speakerName, description, title, address;
+    private Button label;
+    private Button mainMenu;
+
+    private TextView speakerName;
+    private TextView description;
+    private TextView title;
+    private TextView address;
+
     private LectureInformation currentLectureInformation;
 
     @Override
@@ -31,7 +35,8 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
         title = findViewById(R.id.title);
         address = findViewById(R.id.address);
 
-        currentLectureInformation = getCurrentLectureInformation();
+        //Obtains information about the selected lecture from Main Activity
+        currentLectureInformation = (LectureInformation) getIntent().getSerializableExtra("LectureInformation");
 
         mainMenu.setOnClickListener(this);
         label.setOnClickListener(this);
