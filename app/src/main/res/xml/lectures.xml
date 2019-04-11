@@ -145,4 +145,15 @@
             своей болью и опытом, критиковал, подшучивал и иронизировал. Этот доклад - рассказ про то,
             как вышло так, что сейчас я на полном серьезе рекомендую Angular как лучшую технологическую
             платформу большинству своих коллег."/>
+    <lecture
+            speaker_name="Alexander Babaev"
+            date="27 November 15:25"
+            title="There once was Swift"
+            address="Room 2"
+            label="Common"
+            description="We live with Swift in a fifth version of which we are promised to have the stability
+            of the binary interface and happiness. But how can we use all these exciting things for greater good?
+            One can program differently and it is not clear which way is the right one.
+            How to know where the pitfalls are? Why are they there?
+            And are these real pitfalls or just imaginary? Lets take a look together."/>
 </lectures>
