@@ -13,7 +13,9 @@
             tools:layout_editor_absoluteY="15dp"
             tools:layout_editor_absoluteX="15dp"
             android:id="@+id/scrollView2"
-            tools:ignore="MissingConstraints">
+            tools:ignore="MissingConstraints"
+            android:scrollbars="none"
+            android:overScrollMode="never">
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
