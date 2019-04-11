@@ -1,11 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <speakers>
-    <speaker>
-        <name>Artur Vasilov</name>
-        <position>Senior Android Developer at Яндекс</position>
-        <location>St. Petersburg, Russia</location>
-        <discription>Android Developer with over five years of professional
-        experience and love of creating extremely high-quality apps
-            with perfect UI / UX and optimizations. Working at Yandex. GDG Leader.</discription>
-    </speaker>
+    <speaker
+            name="Alexander Efremenkov"
+            image="speaker_alexander_efremenkov"
+            position="System Android developer at Yandex.Taxi"
+            location="Moscow, Russia"
+            discription="Пишу код, смотрю в Android."
+            lecture="D8/R8 vs DX/Proguard"/>
+    <speaker
+            name="Tanay Pant"
+            image="speaker_tanay_pant"
+            position="Engineering Communications Manager at Research Gate"
+            location="Berlin, Germany"
+            discription="Tanay Pant is an author, hacker, developer and tech enthusiast.
+            He is best known for his work on “Learning Web-based Virtual Reality” by Apress,
+            “Building a Virtual Assistant for Raspberry Pi” by Apress and
+            “Learning Firefox OS Application Development” published by Packt.
+            He is also an official representative of Mozilla.
+            He has been listed in the about:credits of the Firefox web browser
+            for his contributions to the different open source projects of the Mozilla Foundation.
+            He also writes for a number of websites like SitePoint and Tuts+ where he shares tips
+            and tricks about web development."
+            lecture="Multiplayer games with WebXR"/>
+    <speaker
+            name="Konstantin Tskhovrebov"
+            image="speaker_konstantin_tskhovrebov"
+            position="Senior Developer at Redmadrobot"
+            location="St. Petersburg, Russia"
+            discription="Graduated from SPBGPU, Konstantin used to be fond of microcontrollers and circuitry.
+            He has started coding for android platform since 2.2 version had been released.
+            Today, Kostya is an architect in the St. Petersburg team Redmadrobot."
+            lecture="Нашёл. Увидел. Запилил"/>
+    <speaker
+            name="Alexander Babaev"
+            image="speaker_alex_babaev"
+            position="CTO at Redmadrobot SPb"
+            location="St. Petersburg, Russia"
+            discription="Java, Objective-C, Swift"
+            lecture="There once was Swift"/>
+    <speaker
+            name="Ruslan Kalbaev"
+            image="speaker_ruslan_kalabaev"
+            position="Android Developer at Redmadrobot"
+            location="St. Petersburg, Russia"
+            discription="Разрабатываю под Android чуть больше 4-х лет.
+            Исследую и решаю сложные технические задачи.
+            Закончил Томский государственный университет, факультет информатики. Адепт кафедры программной инженерии."
+            lecture="Поддержка офлайна в мобильном приложении. Синхронизация"/>
+    <speaker
+            name="Artur Vasilov"
+            image="speaker_artur_vasilov"
+            position="Senior Android Developer at Яндекс"
+            location="St. Petersburg, Russia"
+            discription="Android Developer with over five years of professional
+            experience and love of creating extremely high-quality apps
+            with perfect UI / UX and optimizations. Working at Yandex. GDG Leader."
+            lecture="Как мы ускоряем Яндекс под Android"/>
+    <speaker
+            name="Evgeny Kot"
+            image="speaker_evgeny_kot"
+            position="Teamlead at Wrike"
+            location="St. Petersburg, Russia"
+            discription="Начинал с C++ и железяк, потом переключился на .Net и C#.
+            Работал много где, но как-то так получилось, что работая в Dell пришлось
+            заниматься CoffeeScript и фронтендом ¯\_(ツ)_/¯. Сейчас работаю во Wrike,
+            высоконагруженном SAAS приложении с очень богатым клиентским кодом,
+            который мы пишем на Dart и Angular. Участник программного комитета HolyJS, спикер. Google Developer Expert."
+            lecture="Dart: второе пришествие"/>
+    <speaker
+            name="Doug Sillars"
+            image="speaker_doug_sillars"
+            position="Performance Engineer (Freelance)"
+            location="Digital Nomad, USA"
+            discription="Doug is a leading mobile developer advocate and evangelist.
+            He is widely known as an expert in mobile application architecture,
+            especially when it comes to performance. Doug has worked with thounited-states-of-americands
+            of developers around the world, helping them improve the speed, battery life and
+            customer satisfaction of their applications (both native and web).
+            The author of O’Reilly’s ‘High Performance Android Apps,’
+            he has spoken at conferences around the world on mobile performance.
+            He is currently freelancing,and traveling with his family of 6 (plus the dog!) as a digital nomad in Europe."
+            lecture="Delivering Fast and Beautiful Images and Video"/>
+    <speaker
+            name="Dora Militaru"
+            image="speaker_dora_militaru"
+            position="Senior developer at the Financial Times London"
+            location="The UK"
+            discription="Dora is a senior developer at the Financial Times.
+            She has recently led the team responsible for implementing the EU's
+            General Data Protection Regulation (GDPR) on ft.com, and currently works on exciting internal products.
+            She is passionate about all things web performance – and skydiving."
+            lecture="Breaking news: A web performance story"/>
+    <speaker
+            name="Sergey Ryabov"
+            image="speaker_sergey_ryabov"
+            position="Mobile Consultant Digital Nomad"
+            location="Russia"
+            discription="Currently Sergey is an independent Android Engineer and Consultant
+            with the background in backend dev. Co-organiser of the first Kotlin User Group in Russia
+            and Android Academy in St. Petersburg and Moscow, usually speaks about Kotlin and Android.
+            Kotlin early adopter, digital nomad."
+            lecture="Kotlin-friendly Annotation Processing"/>
+    <speaker
+            name="Illya Klymov"
+            image="speaker_illya_klymov"
+            position="CEO at Javascript.Ninja"
+            location="Kharkov, Ukraine"
+            discription="14 years of JS everywhere: from microcontrollers to rendering video in the cloud.
+            More than 5 years of educational experience (at two universities and Illya's own courses),
+            Ph.D. in Computer Science (field of interest: System Analysis and Theory of optimal decisions).
+            Coach at Kottans.Org project."
+            lecture="Большое А: от любви к ненависти и обратно"/>
+    <speaker
+            name="Evgeny Shishkin"
+            image="speaker_evgeny_shishkin"
+            position="Android Developer at Aviasales"
+            location="St. Petersburg, Russia"
+            discription="Android-разработчик с опытом более 8 лет.
+            Адаптировал телефоны LG под российский рынок, разрабатывал умного ассистента
+            в i-Free и амбициозный аудиогид izi.TRAVEL. В 2016 году присоеденился к команде Aviasales,
+            где разрабатывает приложение Hotellook для поиска лучших цен на отели.
+            Автор популярных android open-source проектов
+            (RobotoTextView, AppMsg, ProgressFragment, Snowfall, MultiBackStack и т.д.)"
+            lecture="Aviasales Отели - практический опыт объединения двух приложений"/>
 </speakers>
