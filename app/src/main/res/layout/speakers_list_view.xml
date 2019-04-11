@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_border"
+        android:padding="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/speaker_artur_vasilov"
+            android:id="@+id/speaker_image"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/imageBorderColor"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speaker_name"
+                android:text="SPEAKER NAME"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/textColorSpeakerName"/>
+        <TextView
+                android:text="Position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speaker_position"
+                android:textStyle="bold"
+                android:textColor="@color/textColorSpeakerInfo"/>
+        <TextView
+                android:text="Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/speaker_location"
+                android:textColor="@color/textColorSpeakerName"/>
+        <Button
+                android:text="View Profile"
+                android:id="@+id/view_profile"
+                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textColorSpeakerInfo"/>
+    </LinearLayout>
+
+</LinearLayout>

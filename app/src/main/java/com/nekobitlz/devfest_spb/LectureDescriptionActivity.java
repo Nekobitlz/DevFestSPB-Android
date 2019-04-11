@@ -10,56 +10,69 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /*
-    Activity with full information about the selected lecture
+    Activity with full information about the speaker lecture
 */
 public class LectureDescriptionActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button label;
+    private Button lectureLabel;
     private Button mainMenu;
 
     private TextView speakerName;
-    private TextView description;
-    private TextView title;
-    private TextView address;
+    private TextView speakerDescription;
 
-    private LectureInformation currentLectureInformation;
+    private TextView lectureDate;
+    private TextView lectureDescription;
+    private TextView lectureTitle;
+    private TextView lectureAddress;
+
+    private LectureInformation currentLecture;
+    private SpeakerInformation currentSpeaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecture_description);
 
-        label = findViewById(R.id.label);
+        lectureLabel = findViewById(R.id.label);
         mainMenu = findViewById(R.id.all_lectures);
         speakerName = findViewById(R.id.speaker_name);
-        description = findViewById(R.id.description);
-        title = findViewById(R.id.title);
-        address = findViewById(R.id.address);
+        speakerDescription = findViewById(R.id.speaker_description2);
+        lectureDate = findViewById(R.id.lecture_date);
+        lectureDescription = findViewById(R.id.description);
+        lectureTitle = findViewById(R.id.title);
+        lectureAddress = findViewById(R.id.address);
 
-        //Obtains information about the selected lecture from Main Activity
-        currentLectureInformation = (LectureInformation) getIntent().getSerializableExtra("LectureInformation");
+        //Obtains information about the selected lecture from Speaker Activity
+        currentLecture = (LectureInformation) getIntent().getSerializableExtra("lecture");
+        currentSpeaker = (SpeakerInformation) getIntent().getSerializableExtra("speaker");
 
         mainMenu.setOnClickListener(this);
-        label.setOnClickListener(this);
+        lectureLabel.setOnClickListener(this);
 
-        setup(currentLectureInformation);
+        setup();
     }
 
     /*
-        Installation of information from the views into this activity
+        Installs information from the selected lecture on views
     */
-    private void setup(LectureInformation currentLectureInformation) {
-        //sets label background color
-        if (android.text.TextUtils.equals(currentLectureInformation.getLabel(), "Android")) {
-            label.setBackgroundColor(Color.parseColor("#ff460e"));
-        } else {
-            label.setBackgroundColor(Color.parseColor("#0e6bff"));
+    private void setup() {
+        //Sets lecture label background color
+        switch (currentLecture.getLabel()) {
+            case "Android" : lectureLabel.setBackgroundColor(Color.parseColor("#ff460e"));
+                break;
+            case "Frontend" : lectureLabel.setBackgroundColor(Color.parseColor("#0e6bff"));
+                break;
+            case "Common" : lectureLabel.setBackgroundColor(Color.parseColor("#5501cd"));
+                break;
         }
 
-        label.setText(currentLectureInformation.getLabel());
-        address.setText(currentLectureInformation.getAddress());
-        speakerName.setText(currentLectureInformation.getSpeakerName());
-        title.setText(currentLectureInformation.getTitle());
-        description.setText(currentLectureInformation.getDescription());
+        speakerName.setText(currentSpeaker.getName());
+        speakerDescription.setText(currentSpeaker.getPosition() + " " + currentSpeaker.getLocation());
+
+        lectureDate.setText(currentLecture.getDate());
+        lectureLabel.setText(currentLecture.getLabel());
+        lectureAddress.setText(currentLecture.getAddress());
+        lectureTitle.setText(currentLecture.getTitle());
+        lectureDescription.setText(currentLecture.getDescription());
     }
 
     /*
@@ -71,8 +84,9 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.all_lectures: {
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
             break;
 
@@ -84,11 +98,10 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
     }
 
     /*
-        If "back" button is pressed - returns to main menu
+        If "back" button is pressed - returns to speaker activity
     */
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getBaseContext(), MainActivity.class));
         finish();
     }
 }

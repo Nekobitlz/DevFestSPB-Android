@@ -7,71 +7,92 @@
         android:layout_height="match_parent"
         tools:context=".LectureDescriptionActivity">
 
-    <RelativeLayout
+    <LinearLayout
             android:layout_width="346dp"
-            android:layout_height="539dp" 
-            android:layout_weight="0" 
-            tools:layout_editor_absoluteY="14dp"
-            app:layout_constraintStart_toStartOf="parent" 
+            android:layout_height="539dp"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="14dp"
+            tools:ignore="MissingConstraints">
 
-        <Button
-                android:text="Все доклады"
-                android:layout_width="134dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/all_lectures"
-                android:background="#780eff"
-                android:textColor="@android:color/white"
-                android:layout_weight="0"
-                android:layout_alignParentBottom="true"
-        />
         <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="470dp" 
-                android:layout_marginTop="10dp">
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical">
-                <TextView
-                        android:text="Title"
+                android:layout_height="470dp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/title"
-                        android:textStyle="bold"
-                        android:textSize="24sp"
-                        android:layout_marginBottom="-128dp"
-                        android:layout_weight="2"/>
-                <TextView
-                        android:text="Address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/address"
-                        android:textSize="20sp"
                         android:layout_weight="2"
-                        android:layout_marginTop="133dp"/>
-                <Button
-                        android:text="Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/label"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/white"
-                        android:background="#ff260e"
-                        android:layout_weight="1"/>
-                <TextView
-                        android:text="SpeakerName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/speaker_name"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:layout_weight="2"
-                        android:layout_marginTop="10dp"/>
+                        android:background="@color/backgroundColor"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
+                    <TextView
+                            android:text="Date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/lecture_date"
+                            android:layout_weight="2"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/textColorSpeakerInfo"
+                            android:textSize="18sp"/>
+                    <TextView
+                            android:text="Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/title"
+                            android:textStyle="bold"
+                            android:textSize="24sp"
+                            android:layout_weight="2"
+                            android:textColor="@color/defaultTextColor"
+                            android:layout_marginTop="10dp"/>
+                    <Button
+                            android:text="Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/label"
+                            android:textStyle="bold"
+                            android:textColor="@color/buttonTextColor"
+                            android:background="@color/androidColor"
+                            android:layout_weight="2"
+                            android:layout_marginTop="10dp"/>
+                    <TextView
+                            android:text="Address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/address"
+                            android:textSize="20sp"
+                            android:layout_weight="2"
+                            android:textColor="@color/defaultTextColor"
+                            android:layout_marginTop="10dp"/>
+                    <TextView
+                            android:text="SpeakerName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/speaker_name"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:layout_weight="2"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/textColorSpeakerInfo"/>
+                    <TextView
+                            android:text="SpeakerDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/speaker_description2"
+                            android:layout_weight="2"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/defaultTextColor" android:textSize="14sp"/>
+                </LinearLayout>
                 <TextView
                         android:text="Description"
                         android:layout_width="match_parent"
@@ -79,8 +100,23 @@
                         android:id="@+id/description"
                         android:textSize="18sp"
                         android:layout_weight="7"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/defaultTextColor"/>
             </LinearLayout>
         </ScrollView>
-    </RelativeLayout>
+        <Button
+                android:text="Все доклады"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:id="@+id/all_lectures"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/buttonTextColor"
+                android:layout_weight="2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
