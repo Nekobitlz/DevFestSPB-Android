@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#5501cd</color>
+    <color name="colorPrimaryDark">#4501cc</color>
+    <color name="colorAccent">#fdc00e</color>
+
+    <color name="backgroundColor">#ecf2f6</color>
+    <color name="lectureColor">#dbe3eb</color>
+    <color name="speakerColor">#fbfafc</color>
+    <color name="borderColor">#5501cd</color>
+    <color name="imageBorderColor">#000</color>
+
+    <color name="textColorSpeakerName">#000</color>
+    <color name="textColorSpeakerInfo">#5501cd</color>
+    <color name="buttonTextColor">#fff</color>
+    <color name="defaultTextColor">#000</color>
+
+    <color name="androidColor">#ff260e</color>
+    <color name="frontEndColor">#0e6bff</color>
+    <color name="commonColor">#5501cd</color>
 </resources>
