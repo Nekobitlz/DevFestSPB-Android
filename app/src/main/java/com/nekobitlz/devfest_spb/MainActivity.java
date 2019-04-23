@@ -1,5 +1,6 @@
 package com.nekobitlz.devfest_spb;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,16 +31,24 @@ public class MainActivity extends AppCompatActivity {
     private String name;
     private String position;
 
+    private RecyclerView speakersRecyclerView;
+    private SpeakerRecyclerViewAdapter adapter;
+
+    private XmlPullParser speakerParser;
+    private XmlPullParser lectureParser;
+
+    private LoadInfoTask loadInfoTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView speakersRecyclerView = findViewById(R.id.speakers_recycler_view);
+        speakersRecyclerView = findViewById(R.id.speakers_recycler_view);
         speakersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        XmlPullParser lectureParser = getResources().getXml(R.xml.lectures);
-        XmlPullParser speakerParser = getResources().getXml(R.xml.speakers);
+        lectureParser = getResources().getXml(R.xml.lectures);
+        speakerParser = getResources().getXml(R.xml.speakers);
 
         this.lecturesInformation = new ArrayList<>();
         this.speakersInformation = new ArrayList<>();
@@ -47,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
         parseLecturesXml(lectureParser);
         parseSpeakerXml(speakerParser);
 
-        speakersRecyclerView.setAdapter(
-                new SpeakerRecyclerViewAdapter(this, speakersInformation, lecturesInformation)
-        );
+        loadInfoTask = new LoadInfoTask();
+        loadInfoTask.execute();
     }
 
     /*
@@ -109,4 +117,34 @@ public class MainActivity extends AppCompatActivity {
                     "Error loading lecture list: " + t.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        loadInfoTask.cancel(true);
+        loadInfoTask = null;
+        super.onDestroy();
+    }
+
+    /*
+        Asynchronous data loading
+
+        TODO(): Fix "This AsyncTask class should be static or leaks might occur"
+    */
+    public class LoadInfoTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            parseLecturesXml(lectureParser);
+            parseSpeakerXml(speakerParser);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            adapter = new SpeakerRecyclerViewAdapter(getBaseContext(), speakersInformation, lecturesInformation);
+            speakersRecyclerView.setAdapter(adapter);
+        }
+    }
+
 }

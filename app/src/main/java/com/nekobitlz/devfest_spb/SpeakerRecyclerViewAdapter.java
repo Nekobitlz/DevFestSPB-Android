@@ -25,9 +25,9 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public SpeakerRecyclerViewAdapter(
             Context context,
             ArrayList<SpeakerInformation> speakersInformation,
-            ArrayList<LectureInformation> lectureInformations) {
+            ArrayList<LectureInformation> lectureInformation) {
         this.speakersInformation = speakersInformation;
-        this.lectureInformation = lectureInformations;
+        this.lectureInformation = lectureInformation;
         this.context = context;
     }
 
@@ -77,6 +77,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SpeakerDescriptionActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 intent.putExtra("lecture", currentLecture);
                 intent.putExtra("speaker", currentSpeaker);
