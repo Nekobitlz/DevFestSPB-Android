@@ -1,4 +1,4 @@
-package com.nekobitlz.devfest_spb;
+package com.nekobitlz.devfest_spb.data;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.nekobitlz.devfest_spb;
+package com.nekobitlz.devfest_spb.views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+import com.nekobitlz.devfest_spb.data.LectureInformation;
+import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;

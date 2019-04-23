@@ -1,4 +1,4 @@
-package com.nekobitlz.devfest_spb;
+package com.nekobitlz.devfest_spb.views;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.nekobitlz.devfest_spb.data.LectureInformation;
+import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /*

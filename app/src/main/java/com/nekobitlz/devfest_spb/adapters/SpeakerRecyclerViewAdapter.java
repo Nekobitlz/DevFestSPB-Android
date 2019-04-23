@@ -1,4 +1,4 @@
-package com.nekobitlz.devfest_spb;
+package com.nekobitlz.devfest_spb.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.data.LectureInformation;
+import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.views.SpeakerDescriptionActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
