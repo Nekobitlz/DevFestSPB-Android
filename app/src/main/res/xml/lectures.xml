@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <lectures>
     <lecture
-            speaker_name="Sergey Ryabov"
+            speakerId="sergey-ryabov"
             date="27 November 11:15"
             title="Kotlin-friendly Annotation Processing"
             address="Room 1"
@@ -17,7 +17,7 @@
             получить информацию об использованных особенностях языка, и как использовать
             её во время обработки аннотаций."/>
     <lecture
-            speaker_name="Alexander Efremenkov"
+            speakerId="alex-efremenkov"
             date="27 November 12:25"
             title="D8/R8 vs DX/Proguard"
             address="Room 1"
@@ -29,7 +29,7 @@
             как компилирует D8 против старого доброго DX, зачем сделали второй
             ProGuard и насколько это всё стабильно."/>
     <lecture
-            speaker_name="Ruslan Kalbaev"
+            speakerId="ruslan-kalabaev"
             date="27 November 13:35"
             title="Поддержка офлайна в мобильном приложении. Синхронизация"
             address="Room 1"
@@ -38,7 +38,7 @@
             решение которой позволяет вывести приложение на качественно иной уровень.
             В докладе будет представлена теоретическая часть проблемы и одно из ее практических решений."/>
     <lecture
-            speaker_name="Artur Vasilov"
+            speakerId="artur-vasilov"
             date="27 November 15:25"
             title="Как мы ускоряем Яндекс под Android"
             address="Room 1"
@@ -50,7 +50,7 @@
             Я надеюсь, что этот доклад заставит вас посмотреть на вопросы производительности по-новому
             и подумать о том, что вы можете сделать в своем приложении."/>
     <lecture
-            speaker_name="Evgeny Shishkin"
+            speakerId="eugene-shishkin"
             date="27 November 16:35"
             address="Room 1"
             title="Aviasales Отели - практический опыт объединения двух приложений"
@@ -65,7 +65,7 @@
             Спойлер: В результате объединения приложения свет увидели 2 любопытные
             open source библиотеки: mrButler и nautilus."/>
     <lecture
-            speaker_name="Konstantin Tskhovrebov"
+            speakerId="konstantin-tskhovrebov"
             date="27 November 17:45"
             title="Нашёл. Увидел. Запилил"
             address="Room 1"
@@ -75,7 +75,7 @@
             вам. Я пошел на Dribbble.com и выбрал понравившуюся анимацию. Теперь я сделаю все,
             чтобы реализовать ее, используя MotionLayout, и расскажу о фичах и проблемах аудитории."/>
     <lecture
-            speaker_name="Tanay Pant"
+            speakerId="tanay-pant"
             date="27 November 11:15"
             title="Multiplayer games with WebXR"
             address="Room 2"
@@ -91,7 +91,7 @@
             understanding of what WebXR is and they will be able to create cross-browser WebXR
             experiences as well as multiplayer games similar to Pokemon Go."/>
     <lecture
-            speaker_name="Dora Militaru"
+            speakerId="dora-militaru"
             date="27 November 12:25"
             title="Breaking news: A web performance story"
             address="Room 2"
@@ -104,7 +104,7 @@
             to high availability, high reliability, and optimal performance. This is an opportunity to
             learn about the payoffs and trade-offs we made along the way, and what the future holds."/>
     <lecture
-            speaker_name="Doug Sillars"
+            speakerId="doug-sillars"
             date="27 November 13:35"
             title="Delivering Fast and Beautiful Images and Video"
             address="Room 2"
@@ -119,7 +119,7 @@
             site or app. Attendees will come away with an understand of the current
             ‘state of the art’ for optimizing visual content on the web."/>
     <lecture
-            speaker_name="Evgeny Kot"
+            speakerId="evgeny-kot"
             date="27 November 16:35"
             title="Dart: второе пришествие"
             address="Room 2"
@@ -133,7 +133,7 @@
             в production разработке. Что же такого поменялось за эти годы в языке, в технологиях
             и мире, что вам НУЖНО ПОСЛУШАТЬ этот доклад? Вот об этом и поговорим."/>
     <lecture
-            speaker_name="Illya Klymov"
+            speakerId="illya-klymov"
             date="27 November 17:45"
             title="Большое А: от любви к ненависти и обратно"
             address="Room 2"
@@ -146,7 +146,7 @@
             как вышло так, что сейчас я на полном серьезе рекомендую Angular как лучшую технологическую
             платформу большинству своих коллег."/>
     <lecture
-            speaker_name="Alexander Babaev"
+            speakerId="shurik-babaev"
             date="27 November 15:25"
             title="There once was Swift"
             address="Room 2"

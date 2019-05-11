@@ -58,12 +58,15 @@ public class MainActivity extends AppCompatActivity {
         private String label;
         private String lectureDescription;
 
-        private String speakerDescription;
+        private String id;
+        private String firstName;
+        private String lastName;
         private String image;
-        private String lecture;
+        private String jobTitle;
+        private String company;
         private String location;
-        private String name;
-        private String position;
+        private String about;
+        private String flagImage;
 
         private XmlPullParser speakerParser;
         private XmlPullParser lectureParser;
@@ -114,16 +117,20 @@ public class MainActivity extends AppCompatActivity {
                 while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
                     if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("speaker")) {
                         //Gets xml attributes
-                        speakerDescription = parser.getAttributeValue(0);
-                        image = parser.getAttributeValue(1);
-                        lecture = parser.getAttributeValue(2);
-                        location = parser.getAttributeValue(3);
-                        name = parser.getAttributeValue(4);
-                        position = parser.getAttributeValue(5);
+                        about = parser.getAttributeValue(0);
+                        company = parser.getAttributeValue(1);
+                        firstName = parser.getAttributeValue(2);
+                        flagImage = parser.getAttributeValue(3);
+                        id = parser.getAttributeValue(4);
+                        image = parser.getAttributeValue(5);
+                        jobTitle = parser.getAttributeValue(6);
+                        lastName = parser.getAttributeValue(7);
+                        location = parser.getAttributeValue(8);
 
                         //Adds speakers attributes in one big list from which we can then take items
                         speakersInformation.add(
-                                new SpeakerInformation(name, image, position, location, speakerDescription, lecture)
+                                new SpeakerInformation(id, firstName, lastName, image,
+                                        jobTitle, company, location, about, flagImage)
                         );
                     }
 

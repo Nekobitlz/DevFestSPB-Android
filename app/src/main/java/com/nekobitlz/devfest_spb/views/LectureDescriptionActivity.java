@@ -68,8 +68,9 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
                 break;
         }
 
-        speakerName.setText(currentSpeaker.getName());
-        speakerDescription.setText(currentSpeaker.getPosition() + " " + currentSpeaker.getLocation());
+        speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
+        speakerDescription.setText(currentSpeaker.getJobTitle() + " at " +
+                currentSpeaker.getCompany() + " " + currentSpeaker.getLocation());
 
         lectureDate.setText(currentLecture.getDate());
         lectureLabel.setText(currentLecture.getLabel());

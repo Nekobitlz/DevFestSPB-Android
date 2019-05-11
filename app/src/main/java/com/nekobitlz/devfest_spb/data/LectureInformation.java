@@ -6,7 +6,7 @@ import java.io.Serializable;
     Class for storing lecture data
 */
 public class LectureInformation implements Serializable {
-    private String speakerName;
+    private String speakerId;
     private String date;
     private String address;
     private String title;
@@ -16,8 +16,9 @@ public class LectureInformation implements Serializable {
     /*
         Lecture initialization
     */
-    public LectureInformation(String speakerName, String date, String address, String title, String label, String description) {
-        this.speakerName = speakerName;
+    public LectureInformation(String speakerId, String date, String address,
+                              String title, String label, String description) {
+        this.speakerId = speakerId;
         this.date = date;
         this.address = address;
         this.title = title;
@@ -30,8 +31,8 @@ public class LectureInformation implements Serializable {
     /*
         GETTERS
     */
-    public String getSpeakerName() {
-        return speakerName;
+    public String getSpeakerId() {
+        return speakerId;
     }
 
     public String getDate() {

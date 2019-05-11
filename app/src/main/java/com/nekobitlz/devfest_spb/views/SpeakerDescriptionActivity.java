@@ -83,12 +83,14 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         Installs information from the selected speaker on views
     */
     private void setup(SpeakerInformation currentSpeaker) {
-        speakerName.setText(currentSpeaker.getName());
+        String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
+
+        speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
         speakerImage.setImageResource(
                 getResources().getIdentifier(currentSpeaker.getImage(), "drawable", getPackageName()));
-        speakerPosition.setText(currentSpeaker.getPosition());
+        speakerPosition.setText(currentSpeaker.getJobTitle() + company);
         speakerLocation.setText(currentSpeaker.getLocation());
-        speakerDescription.setText(currentSpeaker.getSpeakerDescription());
+        speakerDescription.setText(currentSpeaker.getAbout());
     }
 
     /*

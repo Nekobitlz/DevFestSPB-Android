@@ -6,52 +6,71 @@ import java.io.Serializable;
     Class for storing speaker data
 */
 public class SpeakerInformation implements Serializable {
-    private String name;
+
+    private String id;
+    private String firstName;
+    private String lastName;
     private String image;
-    private String position;
+    private String jobTitle;
+    private String company;
     private String location;
-    private String speakerDescription;
-    private String lecture;
+    private String about;
+    private String flagImage;
 
     /*
         Speaker initialization
     */
-    public SpeakerInformation(String name, String image, String position,
-                              String location, String speakerDescription, String lecture) {
-        this.name = name;
+    public SpeakerInformation(String id, String firstName, String lastName, String image, String jobTitle,
+                              String company, String location, String about, String flagImage) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.image = image;
-        this.position = position;
+        this.jobTitle = jobTitle;
+        this.company = company;
         this.location = location;
-        this.lecture = lecture;
+        this.flagImage = flagImage;
 
         //In the xml file for readability, we add a line break that we need to remove
-        this.speakerDescription = speakerDescription.replaceAll("[\\s]{2,}", " ");
+        this.about = about.replaceAll("[\\s]{2,}", " ");
     }
 
     /*
         GETTERS
     */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getImage() {
         return image;
     }
 
-    public String getPosition() {
-        return position;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public String getSpeakerDescription() {
-        return speakerDescription;
+    public String getAbout() {
+        return about;
     }
 
-    public String getLecture() {
-        return lecture;
+    public String getId() {
+        return id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public String getFlagImage() {
+        return flagImage;
     }
 }

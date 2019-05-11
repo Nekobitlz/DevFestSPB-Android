@@ -64,8 +64,9 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         );
 
         //Setting all attributes in view
-        final String speakerName = currentSpeaker.getName();
-        String speakerPosition = currentSpeaker.getPosition();
+        final String speakerName = currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName();
+        String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
+        String speakerPosition = currentSpeaker.getJobTitle() + company;
         String speakerLocation = currentSpeaker.getLocation();
 
         ((ViewHolder) viewHolder).getSpeakerImage().setImageResource(image);
@@ -104,7 +105,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     */
     private LectureInformation getCurrentLecture(SpeakerInformation speakerInformation) {
         for (LectureInformation lecture : lectureInformation) {
-            if (lecture.getSpeakerName().equals(speakerInformation.getName())) {
+            if (lecture.getSpeakerId().equals(speakerInformation.getId())) {
                 return lecture;
             }
         }
