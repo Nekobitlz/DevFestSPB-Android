@@ -6,12 +6,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 import com.nekobitlz.devfest_spb.data.LectureInformation;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
+import com.nekobitlz.devfest_spb.network.NetworkModule;
+import com.nekobitlz.devfest_spb.network.ServerApi;
+import com.nekobitlz.devfest_spb.network.Speaker;
 import org.xmlpull.v1.XmlPullParser;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     */
     public static class LoadInfoTask extends AsyncTask<Void, Void, Void> {
 
+        private ServerApi api;
         private ArrayList<LectureInformation> lecturesInformation;
         private ArrayList<SpeakerInformation> speakersInformation;
 
@@ -85,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 speakerParser = weakContext.get().getResources().getXml(R.xml.speakers);
             }
 
+            api = new NetworkModule().serverApi;
+
             this.lecturesInformation = new ArrayList<>();
             this.speakersInformation = new ArrayList<>();
         }
@@ -92,22 +102,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             parseLecturesXml(lectureParser);
-            parseSpeakerXml(speakerParser);
+            Call<Speaker> speakerCall = api.getSpeakers();
+
+            speakerCall.enqueue(new Callback<Speaker>() {
+                @Override
+                public void onResponse(Call<Speaker> call, Response<Speaker> response) {
+
+                    Speaker data = response.body();
+                    speakersInformation = data.getSpeakersList();
+                    adapter = new SpeakerRecyclerViewAdapter(
+                            weakContext.get(), speakersInformation, lecturesInformation
+                    );
+                    weakSpeakersRecycler.get().setAdapter(adapter);
+
+                    //just check for debug
+                    for (SpeakerInformation i: speakersInformation) {
+                        Log.e("SpeakerData",i.getFirstName() + " " + i.getLastName() +"");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Speaker> call, Throwable t) {
+                    parseSpeakerXml(speakerParser);
+                    Toast.makeText(weakContext.get(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    Log.e("Json Data Error",t.getMessage());
+                }
+            });
 
             return null;
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (weakContext != null) {
-                adapter = new SpeakerRecyclerViewAdapter(weakContext.get(), speakersInformation, lecturesInformation);
-            }
-
-            if (weakSpeakersRecycler != null) {
-                weakSpeakersRecycler.get().setAdapter(adapter);
-            }
-        }
-
 
         /*
             Parses XML with speakers and writes all information into the list

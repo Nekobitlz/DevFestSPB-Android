@@ -1,5 +1,7 @@
 package com.nekobitlz.devfest_spb.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /*
@@ -7,15 +9,26 @@ import java.io.Serializable;
 */
 public class SpeakerInformation implements Serializable {
 
+    @SerializedName("id")
     private String id;
+    @SerializedName("firstName")
     private String firstName;
+    @SerializedName("lastName")
     private String lastName;
+    @SerializedName("photo")
     private String image;
+    @SerializedName("jobTitle")
     private String jobTitle;
+    @SerializedName("company")
     private String company;
+    @SerializedName("location")
     private String location;
+    @SerializedName("about")
     private String about;
+    @SerializedName("flagImage")
     private String flagImage;
+    @SerializedName("links")
+    private Links links;
 
     /*
         Speaker initialization
@@ -72,5 +85,14 @@ public class SpeakerInformation implements Serializable {
 
     public String getFlagImage() {
         return flagImage;
+    }
+
+    private class Links implements Serializable {
+        @SerializedName("twitter")
+        private String twitter;
+        @SerializedName("telegram")
+        private String telegram;
+        @SerializedName("github")
+        private String github;
     }
 }
