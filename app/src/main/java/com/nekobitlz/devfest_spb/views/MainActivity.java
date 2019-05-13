@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             speakerCall.enqueue(new Callback<ApiData>() {
                 @Override
                 public void onResponse(Call<ApiData> call, Response<ApiData> response) {
-
                     ApiData data = response.body();
 
                     speakersInformation = data.getSpeakersList();
@@ -205,7 +204,8 @@ public class MainActivity extends AppCompatActivity {
 
                     //Adds lectures attributes in one big list from which we can then take items
                     lecturesInformation.add(
-                            new LectureInformation(speakerName, date, address, title, label, lectureDescription)
+                            new LectureInformation(speakerName, date, address,
+                                    title, label, lectureDescription)
                     );
                 }
 
