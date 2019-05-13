@@ -1,16 +1,25 @@
 package com.nekobitlz.devfest_spb.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /*
     Class for storing lecture data
 */
 public class LectureInformation implements Serializable {
+
+    @SerializedName("speaker")
     private String speakerId;
+    @SerializedName("time")
     private String date;
+    @SerializedName("room")
     private String address;
+    @SerializedName("title")
     private String title;
+    @SerializedName("track")
     private String label;
+    @SerializedName("description")
     private String description;
 
     /*

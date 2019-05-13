@@ -12,9 +12,7 @@ import com.nekobitlz.devfest_spb.data.LectureInformation;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
-import com.nekobitlz.devfest_spb.network.NetworkModule;
-import com.nekobitlz.devfest_spb.network.ServerApi;
-import com.nekobitlz.devfest_spb.network.Speaker;
+import com.nekobitlz.devfest_spb.network.*;
 import org.xmlpull.v1.XmlPullParser;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,15 +99,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            parseLecturesXml(lectureParser);
-            Call<Speaker> speakerCall = api.getSpeakers();
+            Call<ApiData> speakerCall = api.getData();
 
-            speakerCall.enqueue(new Callback<Speaker>() {
+            speakerCall.enqueue(new Callback<ApiData>() {
                 @Override
-                public void onResponse(Call<Speaker> call, Response<Speaker> response) {
+                public void onResponse(Call<ApiData> call, Response<ApiData> response) {
 
-                    Speaker data = response.body();
+                    ApiData data = response.body();
+
                     speakersInformation = data.getSpeakersList();
+                    lecturesInformation = data.getSchedule().getLecturesList();
+
                     adapter = new SpeakerRecyclerViewAdapter(
                             weakContext.get(), speakersInformation, lecturesInformation
                     );
@@ -119,11 +119,22 @@ public class MainActivity extends AppCompatActivity {
                     for (SpeakerInformation i: speakersInformation) {
                         Log.e("SpeakerData",i.getFirstName() + " " + i.getLastName() +"");
                     }
+
+                    for (LectureInformation i: lecturesInformation) {
+                        Log.e("LectureData", i.getTitle() + "");
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<Speaker> call, Throwable t) {
+                public void onFailure(Call<ApiData> call, Throwable t) {
                     parseSpeakerXml(speakerParser);
+                    parseLecturesXml(lectureParser);
+
+                    adapter = new SpeakerRecyclerViewAdapter(
+                            weakContext.get(), speakersInformation, lecturesInformation
+                    );
+                    weakSpeakersRecycler.get().setAdapter(adapter);
+
                     Toast.makeText(weakContext.get(), t.getMessage(), Toast.LENGTH_SHORT).show();
 
                     Log.e("Json Data Error",t.getMessage());
