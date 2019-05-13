@@ -12,10 +12,15 @@ import com.nekobitlz.devfest_spb.data.LectureInformation;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 
+import static com.nekobitlz.devfest_spb.data.Tracks.*;
+import static com.nekobitlz.devfest_spb.data.Tracks.COMMON;
+import static com.nekobitlz.devfest_spb.data.Tracks.COMMON_NAME;
+
 /*
     Activity with full information about the speaker lecture
 */
 public class LectureDescriptionActivity extends AppCompatActivity implements View.OnClickListener {
+
     private Button lectureLabel;
     private Button mainMenu;
 
@@ -59,19 +64,20 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
     */
     private void setup() {
         //Sets lecture label background color
-        switch (currentLecture.getLabel()) {
-            case "Android" : lectureLabel.setBackgroundColor(Color.parseColor("#ff460e"));
+        switch (currentLecture.getLabel().toLowerCase()) {
+            case ANDROID_NAME : lectureLabel.setBackgroundColor(Color.parseColor(ANDROID.getColor()));
                 break;
-            case "Frontend" : lectureLabel.setBackgroundColor(Color.parseColor("#0e6bff"));
+            case FRONTEND_NAME : lectureLabel.setBackgroundColor(Color.parseColor(FRONTEND.getColor()));
                 break;
-            case "Common" : lectureLabel.setBackgroundColor(Color.parseColor("#5501cd"));
+            case COMMON_NAME : lectureLabel.setBackgroundColor(Color.parseColor(COMMON.getColor()));
                 break;
         }
 
         speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
-        speakerDescription.setText(currentSpeaker.getJobTitle() + " at " +
-                currentSpeaker.getCompany() + " " + currentSpeaker.getLocation());
-
+        speakerDescription.setText(
+                        currentSpeaker.getJobTitle() + " at " +
+                        currentSpeaker.getCompany() + " " + currentSpeaker.getLocation()
+        );
         lectureDate.setText(currentLecture.getDate());
         lectureLabel.setText(currentLecture.getLabel());
         lectureAddress.setText(currentLecture.getAddress());

@@ -2,16 +2,23 @@ package com.nekobitlz.devfest_spb.views;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
+
 import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.data.LectureInformation;
 import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.nekobitlz.devfest_spb.data.Tracks.*;
 
 /*
     Activity with full information about the selected speaker
@@ -64,12 +71,12 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     */
     private void setup(LectureInformation currentLecture) {
         //Sets label background color
-        switch (currentLecture.getLabel()) {
-            case "Android" : speakerLabel.setBackgroundColor(Color.parseColor("#ff460e"));
+        switch (currentLecture.getLabel().toLowerCase()) {
+            case ANDROID_NAME : speakerLabel.setBackgroundColor(Color.parseColor(ANDROID.getColor()));
             break;
-            case "Frontend" : speakerLabel.setBackgroundColor(Color.parseColor("#0e6bff"));
+            case FRONTEND_NAME : speakerLabel.setBackgroundColor(Color.parseColor(FRONTEND.getColor()));
             break;
-            case "Common" : speakerLabel.setBackgroundColor(Color.parseColor("#5501cd"));
+            case COMMON_NAME : speakerLabel.setBackgroundColor(Color.parseColor(COMMON.getColor()));
             break;
         }
 
