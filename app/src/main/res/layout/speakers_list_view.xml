@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,43 +17,87 @@
             android:layout_height="120dp"
             android:src="@drawable/speaker_artur_vasilov"
             android:id="@+id/speaker_image"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             app:civ_border_width="1dp"
-            app:civ_border_color="@color/imageBorderColor"/>
+            app:civ_border_color="@color/imageBorderColor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+    />
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/flag_ru"
+            android:id="@+id/speaker_flag"
+            app:civ_border_width="2dp"
+            app:layout_constraintStart_toStartOf="@+id/speaker_image"
+            app:layout_constraintEnd_toEndOf="@+id/speaker_image"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/speaker_image"
+            app:layout_constraintBottom_toBottomOf="@+id/speaker_image"
+            app:layout_constraintVertical_bias="1.0"
+            app:civ_border_color="@color/speakerColor"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp">
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/speaker_name"
-                android:text="SPEAKER NAME"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/textColorSpeakerName"/>
-        <TextView
-                android:text="Position"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/speaker_position"
-                android:textStyle="bold"
-                android:textColor="@color/textColorSpeakerInfo"/>
-        <TextView
-                android:text="Location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/speaker_location"
-                android:textColor="@color/textColorSpeakerName"/>
-        <Button
-                android:text="View Profile"
-                android:id="@+id/view_profile"
-                android:layout_height="wrap_content"
-                android:layout_width="120dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/textColorSpeakerInfo"/>
-    </LinearLayout>
+            android:id="@+id/speaker_name"
+            android:text="SPEAKER NAME"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/textColorSpeakerName"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/speaker_image"
+            app:layout_constraintStart_toEndOf="@+id/speaker_image"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0.0"
+    />
+    <TextView
+            android:text="Position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/speaker_position"
+            android:textStyle="bold"
+            android:textColor="@color/textColorSpeakerInfo"
+            app:layout_constraintTop_toBottomOf="@+id/speaker_name"
+            app:layout_constraintStart_toStartOf="@+id/speaker_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constrainedWidth="true"
+    />
+    <TextView
+            android:text="Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/speaker_location"
+            android:textColor="@color/textColorSpeakerName"
+            app:layout_constraintTop_toBottomOf="@+id/speaker_position"
+            app:layout_constraintStart_toStartOf="@+id/speaker_position"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0.0"
+    />
+    <Button
+            android:text="View Profile"
+            android:id="@+id/view_profile"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/textColorSpeakerInfo"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintTop_toBottomOf="@+id/speaker_location"
+            app:layout_constraintStart_toStartOf="@+id/speaker_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+    />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

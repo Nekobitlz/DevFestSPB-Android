@@ -9,10 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.LectureInformation;
 import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 import com.nekobitlz.devfest_spb.views.SpeakerDescriptionActivity;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
@@ -59,8 +64,13 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         //Getting image from resources by image name
         String imageName = currentSpeaker.getImage();
-        int image = context.getResources().getIdentifier(
+        final int imageResource = context.getResources().getIdentifier(
                 imageName, "drawable", context.getPackageName()
+        );
+
+        String flagImageName = "flag_" + currentSpeaker.getFlagImage();
+        int flagImage = context.getResources().getIdentifier(
+                flagImageName, "drawable", context.getPackageName()
         );
 
         //Setting all attributes in view
@@ -118,6 +128,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView speakerImage;
+        private CircleImageView speakerFlag;
         private TextView speakerName;
         private TextView speakerPosition;
         private TextView speakerLocation;
@@ -127,6 +138,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             super(itemView);
 
             speakerImage = itemView.findViewById(R.id.speaker_image);
+            speakerFlag = itemView.findViewById(R.id.speaker_flag);
             speakerName = itemView.findViewById(R.id.speaker_name);
             speakerPosition = itemView.findViewById(R.id.speaker_position);
             speakerLocation = itemView.findViewById(R.id.speaker_location);
@@ -138,6 +150,10 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         */
         public TextView getSpeakerName() {
             return speakerName;
+        }
+
+        public CircleImageView getSpeakerFlag() {
+            return speakerFlag;
         }
 
         public TextView getSpeakerPosition() {
