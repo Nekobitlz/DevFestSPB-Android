@@ -79,7 +79,23 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         String speakerPosition = currentSpeaker.getJobTitle() + company;
         String speakerLocation = currentSpeaker.getLocation();
 
-        ((ViewHolder) viewHolder).getSpeakerImage().setImageResource(image);
+        final RecyclerView.ViewHolder finalViewHolder = viewHolder;
+        Picasso.with(context)
+                .load(imageName)
+                .into(((ViewHolder) viewHolder).getSpeakerImage(), new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        /* Celebrate success! */
+                    }
+
+                    @Override
+                    public void onError() {
+                        // Load the local image
+                        ((ViewHolder) finalViewHolder).getSpeakerImage().setImageResource(imageResource);
+                    }
+                });
+
+        ((ViewHolder) viewHolder).getSpeakerFlag().setImageResource(flagImage);
         ((ViewHolder) viewHolder).getSpeakerName().setText(speakerName.toUpperCase());
         ((ViewHolder) viewHolder).getSpeakerPosition().setText(speakerPosition);
         ((ViewHolder) viewHolder).getSpeakerLocation().setText(speakerLocation);

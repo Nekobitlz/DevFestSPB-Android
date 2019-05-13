@@ -91,10 +91,26 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     */
     private void setup(SpeakerInformation currentSpeaker) {
         String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
+        final int speakerImageResource = getResources().getIdentifier(
+                currentSpeaker.getImage(), "drawable", getPackageName()
+        );
+
+        Picasso.with(this)
+                .load(currentSpeaker.getImage())
+                .into(speakerImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        /* Celebrate success! */
+                    }
+
+                    @Override
+                    public void onError() {
+                        // Load the local image
+                        speakerImage.setImageResource(speakerImageResource);
+                    }
+                });
 
         speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
-        speakerImage.setImageResource(
-                getResources().getIdentifier(currentSpeaker.getImage(), "drawable", getPackageName()));
         speakerPosition.setText(currentSpeaker.getJobTitle() + company);
         speakerLocation.setText(currentSpeaker.getLocation());
         speakerDescription.setText(currentSpeaker.getAbout());
