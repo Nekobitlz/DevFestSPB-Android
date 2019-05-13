@@ -14,10 +14,12 @@ import com.nekobitlz.devfest_spb.data.SpeakerInformation;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
 import com.nekobitlz.devfest_spb.network.*;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -127,17 +129,32 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ApiData> call, Throwable t) {
-                    parseSpeakerXml(speakerParser);
-                    parseLecturesXml(lectureParser);
+                    Toast.makeText(weakContext.get(),
+                            "Failed to load file from server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("Json Data Error",t.getMessage());
+
+                    //If information can't be downloaded from the server - it's parsed from xml
+                    try {
+                        parseSpeakerXml(speakerParser);
+                        parseLecturesXml(lectureParser);
+
+                        Toast.makeText(weakContext.get(),
+                                "Data successfully uploaded offline!", Toast.LENGTH_LONG).show();
+                    } catch (XmlPullParserException e) {
+                        Toast.makeText(weakContext.get(),
+                                "Couldn't parse data: " + e.toString(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        Toast.makeText(weakContext.get(),
+                                "Error reading file: " + e.toString(), Toast.LENGTH_LONG).show();
+                    } catch (Throwable throwable) {
+                        Toast.makeText(weakContext.get(),
+                            "Error loading speaker list: " + throwable.toString(), Toast.LENGTH_LONG).show();
+                    }
 
                     adapter = new SpeakerRecyclerViewAdapter(
                             weakContext.get(), speakersInformation, lecturesInformation
                     );
                     weakSpeakersRecycler.get().setAdapter(adapter);
-
-                    Toast.makeText(weakContext.get(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    Log.e("Json Data Error",t.getMessage());
                 }
             });
 
@@ -147,62 +164,52 @@ public class MainActivity extends AppCompatActivity {
         /*
             Parses XML with speakers and writes all information into the list
         */
-        private void parseSpeakerXml(XmlPullParser parser) {
-            try {
-                while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("speaker")) {
-                        //Gets xml attributes
-                        about = parser.getAttributeValue(0);
-                        company = parser.getAttributeValue(1);
-                        firstName = parser.getAttributeValue(2);
-                        flagImage = parser.getAttributeValue(3);
-                        id = parser.getAttributeValue(4);
-                        image = parser.getAttributeValue(5);
-                        jobTitle = parser.getAttributeValue(6);
-                        lastName = parser.getAttributeValue(7);
-                        location = parser.getAttributeValue(8);
+        private void parseSpeakerXml(XmlPullParser parser) throws XmlPullParserException, IOException {
+            while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
+                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("speaker")) {
+                    //Gets xml attributes
+                    about = parser.getAttributeValue(0);
+                    company = parser.getAttributeValue(1);
+                    firstName = parser.getAttributeValue(2);
+                    flagImage = parser.getAttributeValue(3);
+                    id = parser.getAttributeValue(4);
+                    image = parser.getAttributeValue(5);
+                    jobTitle = parser.getAttributeValue(6);
+                    lastName = parser.getAttributeValue(7);
+                    location = parser.getAttributeValue(8);
 
-                        //Adds speakers attributes in one big list from which we can then take items
-                        speakersInformation.add(
-                                new SpeakerInformation(id, firstName, lastName, image,
-                                        jobTitle, company, location, about, flagImage)
-                        );
-                    }
-
-                    parser.next();
+                    //Adds speakers attributes in one big list from which we can then take items
+                    speakersInformation.add(
+                            new SpeakerInformation(id, firstName, lastName, image,
+                                    jobTitle, company, location, about, flagImage)
+                    );
                 }
-            } catch (Throwable t) {
-                Toast.makeText(weakContext.get(),
-                        "Error loading speaker list: " + t.toString(), Toast.LENGTH_LONG).show();
+
+                parser.next();
             }
         }
 
         /*
             Parses XML with lectures and writes all information into the list
         */
-        private void parseLecturesXml(XmlPullParser parser) {
-            try {
-                while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("lecture")) {
-                        //Gets xml attributes
-                        address = parser.getAttributeValue(0);
-                        date = parser.getAttributeValue(1);
-                        lectureDescription = parser.getAttributeValue(2);
-                        label = parser.getAttributeValue(3);
-                        speakerName = parser.getAttributeValue(4);
-                        title = parser.getAttributeValue(5);
+        private void parseLecturesXml(XmlPullParser parser) throws XmlPullParserException, IOException {
+            while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
+                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("lecture")) {
+                    //Gets xml attributes
+                    address = parser.getAttributeValue(0);
+                    date = parser.getAttributeValue(1);
+                    lectureDescription = parser.getAttributeValue(2);
+                    label = parser.getAttributeValue(3);
+                    speakerName = parser.getAttributeValue(4);
+                    title = parser.getAttributeValue(5);
 
-                        //Adds lectures attributes in one big list from which we can then take items
-                        lecturesInformation.add(
-                                new LectureInformation(speakerName, date, address, title, label, lectureDescription)
-                        );
-                    }
-
-                    parser.next();
+                    //Adds lectures attributes in one big list from which we can then take items
+                    lecturesInformation.add(
+                            new LectureInformation(speakerName, date, address, title, label, lectureDescription)
+                    );
                 }
-            } catch (Throwable t) {
-                Toast.makeText(weakContext.get(),
-                        "Error loading lecture list: " + t.toString(), Toast.LENGTH_LONG).show();
+
+                parser.next();
             }
         }
     }
