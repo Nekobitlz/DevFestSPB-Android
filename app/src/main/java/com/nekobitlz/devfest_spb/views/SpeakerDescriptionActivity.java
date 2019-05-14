@@ -83,7 +83,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         }
 
         speakerLabel.setText(currentLecture.getLabel());
-        speakerAddress.setText(currentLecture.getAddress());
+        speakerAddress.setText("Room " + currentLecture.getAddress());
         speakerTitle.setText(currentLecture.getTitle());
         speakerDate.setText(currentLecture.getDate());
     }

@@ -4,7 +4,7 @@
             speakerId="sergey-ryabov"
             date="27 November 11:15"
             title="Kotlin-friendly Annotation Processing"
-            address="Room 1"
+            address="1"
             label="Android"
             description="Рекламируя вашему другу Kotlin, как замену Java, наверняка
             первым аргументом будет тот самый синтаксический сахар, от которого мы
@@ -20,7 +20,7 @@
             speakerId="alex-efremenkov"
             date="27 November 12:25"
             title="D8/R8 vs DX/Proguard"
-            address="Room 1"
+            address="1"
             label="Android"
             description="В Android тулчейн добавили новый компилятор - D8 (Dope 8),
             который позволяет компилировать быстрее, чем DX, и иметь наименьший
@@ -32,7 +32,7 @@
             speakerId="ruslan-kalabaev"
             date="27 November 13:35"
             title="Поддержка офлайна в мобильном приложении. Синхронизация"
-            address="Room 1"
+            address="1"
             label="Android"
             description="Поддержка офлайна в мобильном приложении - нетривиальная задача,
             решение которой позволяет вывести приложение на качественно иной уровень.
@@ -41,7 +41,7 @@
             speakerId="artur-vasilov"
             date="27 November 15:25"
             title="Как мы ускоряем Яндекс под Android"
-            address="Room 1"
+            address="1"
             label="Android"
             description="Многие Android-разработчики знают стандартные методы профилирования приложений,
             инструменты для отладки и улучшения производительности. Однако для случая больших приложений этого
@@ -52,7 +52,7 @@
     <lecture
             speakerId="eugene-shishkin"
             date="27 November 16:35"
-            address="Room 1"
+            address="1"
             title="Aviasales Отели - практический опыт объединения двух приложений"
             label="Android"
             description="До недавнего времени у нас независимо существовало два приложения:
@@ -68,7 +68,7 @@
             speakerId="konstantin-tskhovrebov"
             date="27 November 17:45"
             title="Нашёл. Увидел. Запилил"
-            address="Room 1"
+            address="1"
             label="Android"
             description="Я был впечатлен представленным Google IO Motion Layout,
             поэтому решил изучить его в бою и рассказать о практическом использовании
@@ -78,7 +78,7 @@
             speakerId="tanay-pant"
             date="27 November 11:15"
             title="Multiplayer games with WebXR"
-            address="Room 2"
+            address="2"
             label="Frontend"
             description="Virtual Reality is a technology used for building realistic experiences for games,
             environments, content display as well as marketing. In this session, I will teach the participants
@@ -94,7 +94,7 @@
             speakerId="dora-militaru"
             date="27 November 12:25"
             title="Breaking news: A web performance story"
-            address="Room 2"
+            address="2"
             label="Frontend"
             description="At the Financial Times we built one of the world's fastest news websites.
             This talk sheds light on the unique challenges of optimising web performance for a
@@ -107,7 +107,7 @@
             speakerId="doug-sillars"
             date="27 November 13:35"
             title="Delivering Fast and Beautiful Images and Video"
-            address="Room 2"
+            address="2"
             label="Frontend"
             description="The average mobile website page weight is ~50% images. Toss
             in the complication of thousands of differently sized screens, and it might
@@ -122,7 +122,7 @@
             speakerId="evgeny-kot"
             date="27 November 16:35"
             title="Dart: второе пришествие"
-            address="Room 2"
+            address="2"
             label="Frontend"
             description="Привет, я - Кот. И ещё GDE в Dart и Flutter. И работаю во Wrike.
             Так получилось, что мы используем Dart в течение четырёх лет и написали
@@ -136,7 +136,7 @@
             speakerId="illya-klymov"
             date="27 November 17:45"
             title="Большое А: от любви к ненависти и обратно"
-            address="Room 2"
+            address="2"
             label="Frontend"
             description="Всем привет. Меня зовут Илья и я пишу на JavaScript уже более 10 лет.
             За это время я перепробовал почти все хайповые и парочку маргинальных фреймворков,
@@ -149,7 +149,7 @@
             speakerId="shurik-babaev"
             date="27 November 15:25"
             title="There once was Swift"
-            address="Room 2"
+            address="2"
             label="Common"
             description="We live with Swift in a fifth version of which we are promised to have the stability
             of the binary interface and happiness. But how can we use all these exciting things for greater good?

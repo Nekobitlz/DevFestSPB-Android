@@ -80,7 +80,7 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
         );
         lectureDate.setText(currentLecture.getDate());
         lectureLabel.setText(currentLecture.getLabel());
-        lectureAddress.setText(currentLecture.getAddress());
+        lectureAddress.setText("Room " + currentLecture.getAddress());
         lectureTitle.setText(currentLecture.getTitle());
         lectureDescription.setText(currentLecture.getDescription());
     }
