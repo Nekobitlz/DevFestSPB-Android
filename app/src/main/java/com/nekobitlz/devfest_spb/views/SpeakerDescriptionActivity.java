@@ -27,6 +27,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
 
     private TextView speakerName;
     private CircleImageView speakerImage;
+    private CircleImageView speakerFlag;
     private TextView speakerLocation;
     private TextView speakerPosition;
     private TextView speakerDescription;
@@ -45,7 +46,8 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_speaker_description);
 
         speakerName = findViewById(R.id.speaker_name);
-        speakerImage = findViewById(R.id.speaker_image2);
+        speakerImage = findViewById(R.id.speaker_image);
+        speakerFlag = findViewById(R.id.speaker_flag);
         speakerPosition = findViewById(R.id.speaker_position);
         speakerLocation = findViewById(R.id.speaker_location);
 
@@ -95,6 +97,11 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
                 currentSpeaker.getImage(), "drawable", getPackageName()
         );
 
+        String flagImageName = "flag_" + currentSpeaker.getFlagImage();
+        int flagImage = getResources().getIdentifier(
+                flagImageName, "drawable", getPackageName()
+        );
+
         Picasso.with(this)
                 .load(currentSpeaker.getImage())
                 .into(speakerImage, new Callback() {
@@ -110,6 +117,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
                     }
                 });
 
+        speakerFlag.setImageResource(flagImage);
         speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
         speakerPosition.setText(currentSpeaker.getJobTitle() + company);
         speakerLocation.setText(currentSpeaker.getLocation());
