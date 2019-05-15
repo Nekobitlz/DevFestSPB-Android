@@ -87,12 +87,28 @@ public class SpeakerInformation implements Serializable {
         return flagImage;
     }
 
-    private class Links implements Serializable {
+    public Links getLinks() {
+        return links;
+    }
+
+    public class Links implements Serializable {
         @SerializedName("twitter")
         private String twitter;
         @SerializedName("telegram")
         private String telegram;
         @SerializedName("github")
         private String github;
+
+        public String getTwitter() {
+            return twitter;
+        }
+
+        public String getTelegram() {
+            return telegram;
+        }
+
+        public String getGithub() {
+            return github;
+        }
     }
 }

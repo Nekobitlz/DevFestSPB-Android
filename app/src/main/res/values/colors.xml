@@ -18,4 +18,8 @@
     <color name="androidColor">#ff260e</color>
     <color name="frontEndColor">#0e6bff</color>
     <color name="commonColor">#5501cd</color>
+
+    <color name="twitterColor">#006c96</color>
+    <color name="telegramColor">#25779b</color>
+    <color name="githubColor">#171515</color>
 </resources>

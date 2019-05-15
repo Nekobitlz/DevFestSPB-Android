@@ -2,6 +2,7 @@ package com.nekobitlz.devfest_spb.views;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,9 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     private TextView speakerLocation;
     private TextView speakerPosition;
     private TextView speakerDescription;
+    private CircleImageView twitter;
+    private CircleImageView github;
+    private CircleImageView telegram;
 
     private Button speakerLabel;
     private TextView speakerAddress;
@@ -51,6 +55,10 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         speakerPosition = findViewById(R.id.speaker_position);
         speakerLocation = findViewById(R.id.speaker_location);
 
+        twitter = findViewById(R.id.twitter);
+        telegram = findViewById(R.id.telegram);
+        github = findViewById(R.id.github);
+
         speakerLabel = findViewById(R.id.speaker_label);
         speakerDescription = findViewById(R.id.speaker_description);
         speakerTitle = findViewById(R.id.speaker_title);
@@ -63,6 +71,9 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
 
         speakerTitle.setOnClickListener(this);
         speakerLabel.setOnClickListener(this);
+        twitter.setOnClickListener(this);
+        telegram.setOnClickListener(this);
+        github.setOnClickListener(this);
 
         setup(currentLecture);
         setup(currentSpeaker);
@@ -102,6 +113,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
                 flagImageName, "drawable", getPackageName()
         );
 
+        // loading image from URL
         Picasso.with(this)
                 .load(currentSpeaker.getImage())
                 .into(speakerImage, new Callback() {
@@ -122,6 +134,19 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         speakerPosition.setText(currentSpeaker.getJobTitle() + company);
         speakerLocation.setText(currentSpeaker.getLocation());
         speakerDescription.setText(currentSpeaker.getAbout());
+
+        // If speaker has no link, it will not be shown
+        if (currentSpeaker.getLinks().getTwitter() == null) {
+            twitter.setVisibility(View.GONE);
+        }
+
+        if (currentSpeaker.getLinks().getTelegram() == null) {
+            telegram.setVisibility(View.GONE);
+        }
+
+        if (currentSpeaker.getLinks().getGithub() == null) {
+            github.setVisibility(View.GONE);
+        }
     }
 
     /*
@@ -137,6 +162,27 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
                 intent.putExtra("lecture", currentLecture);
                 intent.putExtra("speaker", currentSpeaker);
                 startActivity(intent);
+            }
+            break;
+
+            case R.id.twitter: {
+                String twitterUrl = currentSpeaker.getLinks().getTwitter();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterUrl));
+                startActivity(browserIntent);
+            }
+            break;
+
+            case R.id.telegram: {
+                String telegramUrl = currentSpeaker.getLinks().getTelegram();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(telegramUrl));
+                startActivity(browserIntent);
+            }
+            break;
+
+            case R.id.github: {
+                String githubUrl = currentSpeaker.getLinks().getGithub();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl));
+                startActivity(browserIntent);
             }
             break;
 
