@@ -135,17 +135,19 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         speakerLocation.setText(currentSpeaker.getLocation());
         speakerDescription.setText(currentSpeaker.getAbout());
 
-        // If speaker has no link, it will not be shown
-        if (currentSpeaker.getLinks().getTwitter() == null) {
-            twitter.setVisibility(View.GONE);
-        }
+        // If speaker has link, it will be shown
+        if (currentSpeaker.getLinks() != null) {
+            if (currentSpeaker.getLinks().getTwitter() != null) {
+                twitter.setVisibility(View.VISIBLE);
+            }
 
-        if (currentSpeaker.getLinks().getTelegram() == null) {
-            telegram.setVisibility(View.GONE);
-        }
+            if (currentSpeaker.getLinks().getTelegram() != null) {
+                telegram.setVisibility(View.VISIBLE);
+            }
 
-        if (currentSpeaker.getLinks().getGithub() == null) {
-            github.setVisibility(View.GONE);
+            if (currentSpeaker.getLinks().getGithub() != null) {
+                github.setVisibility(View.VISIBLE);
+            }
         }
     }
 

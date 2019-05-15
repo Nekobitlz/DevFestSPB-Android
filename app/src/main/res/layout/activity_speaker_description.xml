@@ -124,6 +124,8 @@
                             android:layout_weight="1"
                             android:src="@drawable/link_twitter"
                             android:layout_marginRight="4dp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="4dp"
                             app:civ_border_width="1dp"
                             app:civ_border_color="@color/twitterColor"
                             app:civ_circle_background_color="@color/twitterColor"
@@ -139,6 +141,7 @@
                             android:cropToPadding="false"
                             android:adjustViewBounds="false"
                             android:baselineAlignBottom="true"
+                            android:visibility="gone"
                             app:civ_border_overlay="true"
                             app:civ_border_color="@color/telegramColor"
                             app:civ_border_width="1dp"
@@ -152,12 +155,12 @@
                             android:src="@drawable/link_github"
                             android:layout_marginEnd="4dp"
                             android:layout_marginRight="4dp"
+                            android:visibility="gone"
                             app:civ_border_color="@color/githubColor"
                             app:civ_border_width="1dp"
                             app:civ_circle_background_color="@color/githubColor"
                     />
                 </LinearLayout>
-
             </android.support.constraint.ConstraintLayout>
 
             <TextView
