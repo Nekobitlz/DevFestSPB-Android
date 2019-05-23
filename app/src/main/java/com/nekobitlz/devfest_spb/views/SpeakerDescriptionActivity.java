@@ -11,8 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nekobitlz.devfest_spb.R;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
-import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.data.LectureInfo;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -41,8 +41,8 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     private TextView speakerTitle;
     private TextView speakerDate;
 
-    private SpeakerInformation currentSpeaker;
-    private LectureInformation currentLecture;
+    private SpeakerInfo currentSpeaker;
+    private LectureInfo currentLecture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
         speakerDate = findViewById(R.id.speaker_date);
 
         //Obtains information about the selected lecture from Main Activity
-        currentLecture = (LectureInformation) getIntent().getSerializableExtra("lecture");
-        currentSpeaker = (SpeakerInformation) getIntent().getSerializableExtra("speaker");
+        currentLecture = (LectureInfo) getIntent().getSerializableExtra("lecture");
+        currentSpeaker = (SpeakerInfo) getIntent().getSerializableExtra("speaker");
 
         speakerTitle.setOnClickListener(this);
         speakerLabel.setOnClickListener(this);
@@ -82,7 +82,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     /*
         Installs information from the speaker lecture on views
     */
-    private void setup(LectureInformation currentLecture) {
+    private void setup(LectureInfo currentLecture) {
         //Sets label background color
         switch (currentLecture.getLabel().toLowerCase()) {
             case ANDROID_NAME : speakerLabel.setBackgroundColor(Color.parseColor(ANDROID.getColor()));
@@ -102,7 +102,7 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     /*
         Installs information from the selected speaker on views
     */
-    private void setup(SpeakerInformation currentSpeaker) {
+    private void setup(SpeakerInfo currentSpeaker) {
         String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
         final int speakerImageResource = getResources().getIdentifier(
                 currentSpeaker.getImage(), "drawable", getPackageName()

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /*
     Class for storing speaker data
 */
-public class SpeakerInformation implements Serializable {
+public class SpeakerInfo implements Serializable {
 
     @SerializedName("id")
     private String id;
@@ -33,8 +33,8 @@ public class SpeakerInformation implements Serializable {
     /*
         Speaker initialization
     */
-    public SpeakerInformation(String id, String firstName, String lastName, String image, String jobTitle,
-                              String company, String location, String about, String flagImage) {
+    public SpeakerInfo(String id, String firstName, String lastName, String image, String jobTitle,
+                       String company, String location, String about, String flagImage) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

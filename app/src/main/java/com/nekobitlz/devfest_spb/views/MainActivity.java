@@ -8,13 +8,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
+
+import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.R;
-import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
 import com.nekobitlz.devfest_spb.network.*;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
     public static class LoadInfoTask extends AsyncTask<Void, Void, Void> {
 
         private ServerApi api;
-        private ArrayList<LectureInformation> lecturesInformation;
-        private ArrayList<SpeakerInformation> speakersInformation;
+        private ArrayList<LectureInfo> lecturesInfo;
+        private ArrayList<SpeakerInfo> speakersInfo;
 
         private String speakerName;
         private String date;
@@ -95,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
             api = new NetworkModule().serverApi;
 
-            this.lecturesInformation = new ArrayList<>();
-            this.speakersInformation = new ArrayList<>();
+            this.lecturesInfo = new ArrayList<>();
+            this.speakersInfo = new ArrayList<>();
         }
 
         @Override
@@ -108,20 +111,20 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<ApiData> call, Response<ApiData> response) {
                     ApiData data = response.body();
 
-                    speakersInformation = data.getSpeakersList();
-                    lecturesInformation = data.getSchedule().getLecturesList();
+                    speakersInfo = data.getSpeakersList();
+                    lecturesInfo = data.getSchedule().getLecturesList();
 
                     adapter = new SpeakerRecyclerViewAdapter(
-                            weakContext.get(), speakersInformation, lecturesInformation
+                            weakContext.get(), speakersInfo, lecturesInfo
                     );
                     weakSpeakersRecycler.get().setAdapter(adapter);
 
                     //just check for debug
-                    for (SpeakerInformation i: speakersInformation) {
+                    for (SpeakerInfo i: speakersInfo) {
                         Log.e("SpeakerData",i.getFirstName() + " " + i.getLastName() +"");
                     }
 
-                    for (LectureInformation i: lecturesInformation) {
+                    for (LectureInfo i: lecturesInfo) {
                         Log.e("LectureData", i.getTitle() + "");
                     }
                 }
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     adapter = new SpeakerRecyclerViewAdapter(
-                            weakContext.get(), speakersInformation, lecturesInformation
+                            weakContext.get(), speakersInfo, lecturesInfo
                     );
                     weakSpeakersRecycler.get().setAdapter(adapter);
                 }
@@ -178,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
                     location = parser.getAttributeValue(8);
 
                     //Adds speakers attributes in one big list from which we can then take items
-                    speakersInformation.add(
-                            new SpeakerInformation(id, firstName, lastName, image,
+                    speakersInfo.add(
+                            new SpeakerInfo(id, firstName, lastName, image,
                                     jobTitle, company, location, about, flagImage)
                     );
                 }
@@ -203,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
                     title = parser.getAttributeValue(5);
 
                     //Adds lectures attributes in one big list from which we can then take items
-                    lecturesInformation.add(
-                            new LectureInformation(speakerName, date, address,
+                    lecturesInfo.add(
+                            new LectureInfo(speakerName, date, address,
                                     title, label, lectureDescription)
                     );
                 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /*
     Class for storing lecture data
 */
-public class LectureInformation implements Serializable {
+public class LectureInfo implements Serializable {
 
     @SerializedName("speaker")
     private String speakerId;
@@ -25,8 +25,8 @@ public class LectureInformation implements Serializable {
     /*
         Lecture initialization
     */
-    public LectureInformation(String speakerId, String date, String address,
-                              String title, String label, String description) {
+    public LectureInfo(String speakerId, String date, String address,
+                       String title, String label, String description) {
         this.speakerId = speakerId;
         this.date = date;
         this.address = address;

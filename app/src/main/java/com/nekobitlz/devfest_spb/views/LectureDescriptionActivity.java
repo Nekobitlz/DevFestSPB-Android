@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
+import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.R;
-import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 
 import static com.nekobitlz.devfest_spb.data.Tracks.*;
 import static com.nekobitlz.devfest_spb.data.Tracks.COMMON;
@@ -32,8 +32,8 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
     private TextView lectureTitle;
     private TextView lectureAddress;
 
-    private LectureInformation currentLecture;
-    private SpeakerInformation currentSpeaker;
+    private LectureInfo currentLecture;
+    private SpeakerInfo currentSpeaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class LectureDescriptionActivity extends AppCompatActivity implements Vie
         lectureAddress = findViewById(R.id.address);
 
         //Obtains information about the selected lecture from Speaker Activity
-        currentLecture = (LectureInformation) getIntent().getSerializableExtra("lecture");
-        currentSpeaker = (SpeakerInformation) getIntent().getSerializableExtra("speaker");
+        currentLecture = (LectureInfo) getIntent().getSerializableExtra("lecture");
+        currentSpeaker = (SpeakerInfo) getIntent().getSerializableExtra("speaker");
 
         mainMenu.setOnClickListener(this);
         lectureLabel.setOnClickListener(this);

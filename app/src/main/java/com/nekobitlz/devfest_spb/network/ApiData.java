@@ -1,20 +1,20 @@
 package com.nekobitlz.devfest_spb.network;
 
 import com.google.gson.annotations.SerializedName;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
-import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.data.LectureInfo;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 
 import java.util.ArrayList;
 
 public class ApiData {
 
     @SerializedName("speakers")
-    private ArrayList<SpeakerInformation> speakersList = new ArrayList<>();
+    private ArrayList<SpeakerInfo> speakersList = new ArrayList<>();
 
     @SerializedName("schedule")
     private Schedule schedule;
 
-    public ArrayList<SpeakerInformation> getSpeakersList() {
+    public ArrayList<SpeakerInfo> getSpeakersList() {
         return speakersList;
     }
 
@@ -24,12 +24,12 @@ public class ApiData {
 
     public class Schedule {
         @SerializedName("talks")
-        private ArrayList<LectureInformation> lecturesList = new ArrayList<>();
+        private ArrayList<LectureInfo> lecturesList = new ArrayList<>();
 
         @SerializedName("activities")
         private ArrayList<Activities> activitiesList = new ArrayList<>();
 
-        public ArrayList<LectureInformation> getLecturesList() {
+        public ArrayList<LectureInfo> getLecturesList() {
             return lecturesList;
         }
 

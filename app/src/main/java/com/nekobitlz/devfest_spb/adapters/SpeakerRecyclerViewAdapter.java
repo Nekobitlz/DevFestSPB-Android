@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.nekobitlz.devfest_spb.R;
-import com.nekobitlz.devfest_spb.data.LectureInformation;
-import com.nekobitlz.devfest_spb.data.SpeakerInformation;
+import com.nekobitlz.devfest_spb.data.LectureInfo;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 import com.nekobitlz.devfest_spb.views.SpeakerDescriptionActivity;
 
 import com.squareup.picasso.Callback;
@@ -27,16 +27,16 @@ import java.util.ArrayList;
 */
 public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<SpeakerInformation> speakersInformation;
-    private ArrayList<LectureInformation> lectureInformation;
+    private ArrayList<SpeakerInfo> speakerInfo;
+    private ArrayList<LectureInfo> lectureInfo;
     private Context context;
 
     public SpeakerRecyclerViewAdapter(
             Context context,
-            ArrayList<SpeakerInformation> speakersInformation,
-            ArrayList<LectureInformation> lectureInformation) {
-        this.speakersInformation = speakersInformation;
-        this.lectureInformation = lectureInformation;
+            ArrayList<SpeakerInfo> speakerInfo,
+            ArrayList<LectureInfo> lectureInfo) {
+        this.speakerInfo = speakerInfo;
+        this.lectureInfo = lectureInfo;
         this.context = context;
     }
 
@@ -59,8 +59,8 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         viewHolder = new ViewHolder(viewHolder.itemView);
-        final SpeakerInformation currentSpeaker = speakersInformation.get(i);
-        final LectureInformation currentLecture = getCurrentLecture(currentSpeaker);
+        final SpeakerInfo currentSpeaker = speakerInfo.get(i);
+        final LectureInfo currentLecture = getCurrentLecture(currentSpeaker);
 
         //Getting image from resources by image name
         String imageName = currentSpeaker.getImage();
@@ -123,15 +123,15 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     */
     @Override
     public int getItemCount() {
-        return speakersInformation.size();
+        return speakerInfo.size();
     }
 
     /*
         Gets a lecture from the name of the desired speaker
     */
-    private LectureInformation getCurrentLecture(SpeakerInformation speakerInformation) {
-        for (LectureInformation lecture : lectureInformation) {
-            if (lecture.getSpeakerId().equals(speakerInformation.getId())) {
+    private LectureInfo getCurrentLecture(SpeakerInfo speakerInfo) {
+        for (LectureInfo lecture : lectureInfo) {
+            if (lecture.getSpeakerId().equals(speakerInfo.getId())) {
                 return lecture;
             }
         }
