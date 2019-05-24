@@ -137,15 +137,15 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
 
         // If speaker has link, it will be shown
         if (currentSpeaker.getLinks() != null) {
-            if (currentSpeaker.getLinks().getTwitter() != null) {
+            if (!currentSpeaker.getLinks().getTwitter().equals("null")) {
                 twitter.setVisibility(View.VISIBLE);
             }
 
-            if (currentSpeaker.getLinks().getTelegram() != null) {
+            if (!currentSpeaker.getLinks().getTelegram().equals("null")) {
                 telegram.setVisibility(View.VISIBLE);
             }
 
-            if (currentSpeaker.getLinks().getGithub() != null) {
+            if (!currentSpeaker.getLinks().getGithub().equals("null")) {
                 github.setVisibility(View.VISIBLE);
             }
         }
