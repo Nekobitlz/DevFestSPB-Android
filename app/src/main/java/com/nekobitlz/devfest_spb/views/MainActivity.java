@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.nekobitlz.devfest_spb.data.App;
+import com.nekobitlz.devfest_spb.data.AppDatabase;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
@@ -25,6 +27,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
     Main menu on which is a list of lectures
@@ -104,61 +107,85 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            Call<ApiData> speakerCall = api.getData();
+            final AppDatabase db = App.getInstance().getDatabase();
 
-            speakerCall.enqueue(new Callback<ApiData>() {
-                @Override
-                public void onResponse(Call<ApiData> call, Response<ApiData> response) {
-                    ApiData data = response.body();
+            //If we don't have records in the database,
+            // then need to download data from API
+            if (db.speakerDao().getAll().isEmpty()) {
+                Call<ApiData> speakerCall = api.getData();
 
-                    speakersInfo = data.getSpeakersList();
-                    lecturesInfo = data.getSchedule().getLecturesList();
+                speakerCall.enqueue(new Callback<ApiData>() {
+                    @Override
+                    public void onResponse(Call<ApiData> call, Response<ApiData> response) {
+                        ApiData data = response.body();
 
-                    adapter = new SpeakerRecyclerViewAdapter(
-                            weakContext.get(), speakersInfo, lecturesInfo
-                    );
-                    weakSpeakersRecycler.get().setAdapter(adapter);
+                        speakersInfo = data.getSpeakersList();
+                        lecturesInfo = data.getSchedule().getLecturesList();
 
-                    //just check for debug
-                    for (SpeakerInfo i: speakersInfo) {
-                        Log.e("SpeakerData",i.getFirstName() + " " + i.getLastName() +"");
+                        adapter = new SpeakerRecyclerViewAdapter(
+                                weakContext.get(), speakersInfo, lecturesInfo
+                        );
+                        weakSpeakersRecycler.get().setAdapter(adapter);
+
+                        //Saving data in database
+                        db.speakerDao().deleteAll();
+                        db.speakerDao().insertAll(speakersInfo.toArray(new SpeakerInfo[0]));
+
+                        db.lectureDao().deleteAll();
+                        db.lectureDao().insertAll(lecturesInfo.toArray(new LectureInfo[0]));
+
+                        //just check for debug
+                        for (SpeakerInfo i : speakersInfo) {
+                            Log.e("SpeakerData", i.getFirstName() + " " + i.getLastName() + "");
+                        }
+
+                        for (LectureInfo i : lecturesInfo) {
+                            Log.e("LectureData", i.getTitle() + "");
+                        }
                     }
 
-                    for (LectureInfo i: lecturesInfo) {
-                        Log.e("LectureData", i.getTitle() + "");
+                    @Override
+                    public void onFailure(Call<ApiData> call, Throwable t) {
+                        Toast.makeText(weakContext.get(),
+                                "Failed to load file from server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("Json Data Error", t.getMessage());
+
+                        //If information can't be downloaded from the server - it's parsed from xml
+                        try {
+                            parseSpeakerXml(speakerParser);
+                            parseLecturesXml(lectureParser);
+
+                            Toast.makeText(weakContext.get(),
+                                    "Data successfully uploaded offline!", Toast.LENGTH_LONG).show();
+                        } catch (XmlPullParserException e) {
+                            Toast.makeText(weakContext.get(),
+                                    "Couldn't parse data: " + e.toString(), Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            Toast.makeText(weakContext.get(),
+                                    "Error reading file: " + e.toString(), Toast.LENGTH_LONG).show();
+                        } catch (Throwable throwable) {
+                            Toast.makeText(weakContext.get(),
+                                    "Error loading speaker list: " + throwable.toString(), Toast.LENGTH_LONG).show();
+                        }
+
+                        adapter = new SpeakerRecyclerViewAdapter(
+                                weakContext.get(), speakersInfo, lecturesInfo
+                        );
+                        weakSpeakersRecycler.get().setAdapter(adapter);
                     }
-                }
+                });
+            } else {
+                //Restoring data from db
+                List<SpeakerInfo> speakersInfo = db.speakerDao().getAll();
+                List<LectureInfo> lecturesInfo = db.lectureDao().getAll();
 
-                @Override
-                public void onFailure(Call<ApiData> call, Throwable t) {
-                    Toast.makeText(weakContext.get(),
-                            "Failed to load file from server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Json Data Error",t.getMessage());
-
-                    //If information can't be downloaded from the server - it's parsed from xml
-                    try {
-                        parseSpeakerXml(speakerParser);
-                        parseLecturesXml(lectureParser);
-
-                        Toast.makeText(weakContext.get(),
-                                "Data successfully uploaded offline!", Toast.LENGTH_LONG).show();
-                    } catch (XmlPullParserException e) {
-                        Toast.makeText(weakContext.get(),
-                                "Couldn't parse data: " + e.toString(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        Toast.makeText(weakContext.get(),
-                                "Error reading file: " + e.toString(), Toast.LENGTH_LONG).show();
-                    } catch (Throwable throwable) {
-                        Toast.makeText(weakContext.get(),
-                            "Error loading speaker list: " + throwable.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                    adapter = new SpeakerRecyclerViewAdapter(
-                            weakContext.get(), speakersInfo, lecturesInfo
-                    );
-                    weakSpeakersRecycler.get().setAdapter(adapter);
-                }
-            });
+                adapter = new SpeakerRecyclerViewAdapter(
+                        weakContext.get(),
+                        (ArrayList<SpeakerInfo>) speakersInfo,
+                        (ArrayList<LectureInfo>) lecturesInfo
+                );
+                weakSpeakersRecycler.get().setAdapter(adapter);
+            }
 
             return null;
         }
@@ -216,5 +243,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }

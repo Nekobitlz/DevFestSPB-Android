@@ -1,14 +1,25 @@
 package com.nekobitlz.devfest_spb.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*
     Class for storing speaker data
 */
+@Entity
 public class SpeakerInfo implements Serializable {
 
+    @NonNull
+    @PrimaryKey
     @SerializedName("id")
     private String id;
     @SerializedName("firstName")
@@ -28,12 +39,13 @@ public class SpeakerInfo implements Serializable {
     @SerializedName("flagImage")
     private String flagImage;
     @SerializedName("links")
+    @TypeConverters({ LinksConverter.class })
     private Links links;
 
     /*
         Speaker initialization
     */
-    public SpeakerInfo(String id, String firstName, String lastName, String image, String jobTitle,
+    public SpeakerInfo(@NonNull String id, String firstName, String lastName, String image, String jobTitle,
                        String company, String location, String about, String flagImage) {
         this.id = id;
         this.firstName = firstName;
@@ -91,7 +103,11 @@ public class SpeakerInfo implements Serializable {
         return links;
     }
 
-    public class Links implements Serializable {
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
+    public static class Links implements Serializable {
         @SerializedName("twitter")
         private String twitter;
         @SerializedName("telegram")
@@ -109,6 +125,37 @@ public class SpeakerInfo implements Serializable {
 
         public String getGithub() {
             return github;
+        }
+
+        public void setTwitter(String twitter) {
+            this.twitter = twitter;
+        }
+
+        public void setTelegram(String telegram) {
+            this.telegram = telegram;
+        }
+
+        public void setGithub(String github) {
+            this.github = github;
+        }
+    }
+
+    public static class LinksConverter {
+        @TypeConverter
+        public String fromLinks(Links links) {
+            return links.getGithub() + " " + links.getTelegram() + " " + links.getTwitter();
+        }
+
+        @TypeConverter
+        public Links toLinks(String linksString) {
+            List<String> linksList = Arrays.asList(linksString.split(" "));
+            Links links = new Links();
+
+            links.setGithub(linksList.get(0));
+            links.setTelegram(linksList.get(1));
+            links.setTwitter(linksList.get(2));
+
+            return links;
         }
     }
 }

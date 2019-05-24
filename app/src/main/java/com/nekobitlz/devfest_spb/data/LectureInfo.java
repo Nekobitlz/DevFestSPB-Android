@@ -1,5 +1,8 @@
 package com.nekobitlz.devfest_spb.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -7,16 +10,19 @@ import java.io.Serializable;
 /*
     Class for storing lecture data
 */
+@Entity
 public class LectureInfo implements Serializable {
 
+    @NonNull
+    @PrimaryKey
+    @SerializedName("title")
+    private String title;
     @SerializedName("speaker")
     private String speakerId;
     @SerializedName("time")
     private String date;
     @SerializedName("room")
     private String address;
-    @SerializedName("title")
-    private String title;
     @SerializedName("track")
     private String label;
     @SerializedName("description")
@@ -26,7 +32,7 @@ public class LectureInfo implements Serializable {
         Lecture initialization
     */
     public LectureInfo(String speakerId, String date, String address,
-                       String title, String label, String description) {
+                       @NonNull String title, String label, String description) {
         this.speakerId = speakerId;
         this.date = date;
         this.address = address;
