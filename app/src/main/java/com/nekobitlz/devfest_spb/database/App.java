@@ -1,9 +1,9 @@
-package com.nekobitlz.devfest_spb.data;
+package com.nekobitlz.devfest_spb.database;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import static com.nekobitlz.devfest_spb.data.AppDatabase.DATABASE_NAME;
+import static com.nekobitlz.devfest_spb.database.AppDatabase.DATABASE_NAME;
 
 public class App extends Application {
 

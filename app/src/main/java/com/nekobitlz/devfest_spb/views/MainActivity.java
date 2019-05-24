@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.nekobitlz.devfest_spb.data.App;
-import com.nekobitlz.devfest_spb.data.AppDatabase;
+import com.nekobitlz.devfest_spb.database.App;
+import com.nekobitlz.devfest_spb.database.AppDatabase;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
