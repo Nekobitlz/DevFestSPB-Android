@@ -9,16 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
+import com.nekobitlz.devfest_spb.data.LectureInfo;
+import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 import com.nekobitlz.devfest_spb.database.App;
 import com.nekobitlz.devfest_spb.database.AppDatabase;
-import com.nekobitlz.devfest_spb.data.LectureInfo;
-import com.nekobitlz.devfest_spb.R;
-import com.nekobitlz.devfest_spb.data.SpeakerInfo;
-import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
-import com.nekobitlz.devfest_spb.network.*;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import com.nekobitlz.devfest_spb.network.ApiData;
+import com.nekobitlz.devfest_spb.network.NetworkModule;
+import com.nekobitlz.devfest_spb.network.ServerApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,26 +64,6 @@ public class MainActivity extends AppCompatActivity {
         private ArrayList<LectureInfo> lecturesInfo;
         private ArrayList<SpeakerInfo> speakersInfo;
 
-        private String speakerName;
-        private String date;
-        private String address;
-        private String title;
-        private String label;
-        private String lectureDescription;
-
-        private String id;
-        private String firstName;
-        private String lastName;
-        private String image;
-        private String jobTitle;
-        private String company;
-        private String location;
-        private String about;
-        private String flagImage;
-
-        private XmlPullParser speakerParser;
-        private XmlPullParser lectureParser;
-
         private WeakReference<Context> weakContext;
         private WeakReference<RecyclerView> weakSpeakersRecycler;
         private SpeakerRecyclerViewAdapter adapter;
@@ -93,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             weakContext = new WeakReference<>(context);
             weakSpeakersRecycler = new WeakReference<>(speakersRecyclerView);
-
-            if (weakContext != null) {
-                lectureParser = weakContext.get().getResources().getXml(R.xml.lectures);
-                speakerParser = weakContext.get().getResources().getXml(R.xml.speakers);
-            }
 
             api = new NetworkModule().serverApi;
 
@@ -119,29 +93,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<ApiData> call, Response<ApiData> response) {
                         ApiData data = response.body();
 
-                        speakersInfo = data.getSpeakersList();
-                        lecturesInfo = data.getSchedule().getLecturesList();
-
-                        adapter = new SpeakerRecyclerViewAdapter(
-                                weakContext.get(), speakersInfo, lecturesInfo
-                        );
-                        weakSpeakersRecycler.get().setAdapter(adapter);
-
-                        //Saving data in database
-                        db.speakerDao().deleteAll();
-                        db.speakerDao().insertAll(speakersInfo.toArray(new SpeakerInfo[0]));
-
-                        db.lectureDao().deleteAll();
-                        db.lectureDao().insertAll(lecturesInfo.toArray(new LectureInfo[0]));
-
-                        //just check for debug
-                        for (SpeakerInfo i : speakersInfo) {
-                            Log.e("SpeakerData", i.getFirstName() + " " + i.getLastName() + "");
+                        if (data != null) {
+                            speakersInfo = data.getSpeakersList();
+                            lecturesInfo = data.getSchedule().getLecturesList();
                         }
 
-                        for (LectureInfo i : lecturesInfo) {
-                            Log.e("LectureData", i.getTitle() + "");
-                        }
+                        saveData(db);
+                        restoreData(db);
+                        initAdapter();
                     }
 
                     @Override
@@ -149,98 +108,36 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(weakContext.get(),
                                 "Failed to load file from server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("Json Data Error", t.getMessage());
-
-                        //If information can't be downloaded from the server - it's parsed from xml
-                        try {
-                            parseSpeakerXml(speakerParser);
-                            parseLecturesXml(lectureParser);
-
-                            Toast.makeText(weakContext.get(),
-                                    "Data successfully uploaded offline!", Toast.LENGTH_LONG).show();
-                        } catch (XmlPullParserException e) {
-                            Toast.makeText(weakContext.get(),
-                                    "Couldn't parse data: " + e.toString(), Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            Toast.makeText(weakContext.get(),
-                                    "Error reading file: " + e.toString(), Toast.LENGTH_LONG).show();
-                        } catch (Throwable throwable) {
-                            Toast.makeText(weakContext.get(),
-                                    "Error loading speaker list: " + throwable.toString(), Toast.LENGTH_LONG).show();
-                        }
-
-                        adapter = new SpeakerRecyclerViewAdapter(
-                                weakContext.get(), speakersInfo, lecturesInfo
-                        );
-                        weakSpeakersRecycler.get().setAdapter(adapter);
                     }
                 });
             } else {
-                //Restoring data from db
-                List<SpeakerInfo> speakersInfo = db.speakerDao().getAll();
-                List<LectureInfo> lecturesInfo = db.lectureDao().getAll();
-
-                adapter = new SpeakerRecyclerViewAdapter(
-                        weakContext.get(),
-                        (ArrayList<SpeakerInfo>) speakersInfo,
-                        (ArrayList<LectureInfo>) lecturesInfo
-                );
-                weakSpeakersRecycler.get().setAdapter(adapter);
+                restoreData(db);
+                initAdapter();
             }
 
             return null;
         }
 
-        /*
-            Parses XML with speakers and writes all information into the list
-        */
-        private void parseSpeakerXml(XmlPullParser parser) throws XmlPullParserException, IOException {
-            while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("speaker")) {
-                    //Gets xml attributes
-                    about = parser.getAttributeValue(0);
-                    company = parser.getAttributeValue(1);
-                    firstName = parser.getAttributeValue(2);
-                    flagImage = parser.getAttributeValue(3);
-                    id = parser.getAttributeValue(4);
-                    image = parser.getAttributeValue(5);
-                    jobTitle = parser.getAttributeValue(6);
-                    lastName = parser.getAttributeValue(7);
-                    location = parser.getAttributeValue(8);
-
-                    //Adds speakers attributes in one big list from which we can then take items
-                    speakersInfo.add(
-                            new SpeakerInfo(id, firstName, lastName, image,
-                                    jobTitle, company, location, about, flagImage)
-                    );
-                }
-
-                parser.next();
-            }
+        private void initAdapter() {
+            adapter = new SpeakerRecyclerViewAdapter(
+                    weakContext.get(),
+                    speakersInfo,
+                    lecturesInfo
+            );
+            weakSpeakersRecycler.get().setAdapter(adapter);
         }
 
-        /*
-            Parses XML with lectures and writes all information into the list
-        */
-        private void parseLecturesXml(XmlPullParser parser) throws XmlPullParserException, IOException {
-            while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-                if (parser.getEventType() == XmlPullParser.START_TAG && parser.getName().equals("lecture")) {
-                    //Gets xml attributes
-                    address = parser.getAttributeValue(0);
-                    date = parser.getAttributeValue(1);
-                    lectureDescription = parser.getAttributeValue(2);
-                    label = parser.getAttributeValue(3);
-                    speakerName = parser.getAttributeValue(4);
-                    title = parser.getAttributeValue(5);
+        private void restoreData(AppDatabase db) {
+            speakersInfo = (ArrayList<SpeakerInfo>) db.speakerDao().getAll();
+            lecturesInfo = (ArrayList<LectureInfo>) db.lectureDao().getAll();
+        }
 
-                    //Adds lectures attributes in one big list from which we can then take items
-                    lecturesInfo.add(
-                            new LectureInfo(speakerName, date, address,
-                                    title, label, lectureDescription)
-                    );
-                }
+        private void saveData(AppDatabase db) {
+            db.speakerDao().deleteAll();
+            db.speakerDao().insertAll(speakersInfo.toArray(new SpeakerInfo[0]));
 
-                parser.next();
-            }
+            db.lectureDao().deleteAll();
+            db.lectureDao().insertAll(lecturesInfo.toArray(new LectureInfo[0]));
         }
     }
 }
