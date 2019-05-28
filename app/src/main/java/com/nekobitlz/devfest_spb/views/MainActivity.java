@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
@@ -20,13 +18,11 @@ import com.nekobitlz.devfest_spb.network.NetworkModule;
 import com.nekobitlz.devfest_spb.network.ServerApi;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 /*
     Main menu on which is a list of lectures
@@ -86,39 +82,33 @@ public class MainActivity extends AppCompatActivity {
             //If we don't have records in the database,
             // then need to download data from API
             if (db.speakerDao().getAll().isEmpty()) {
-                Call<ApiData> speakerCall = api.getData();
+                Call<ApiData> call = api.getData();
+                Response<ApiData> response = null;
 
-                speakerCall.enqueue(new Callback<ApiData>() {
-                    @Override
-                    public void onResponse(Call<ApiData> call, Response<ApiData> response) {
-                        ApiData data = response.body();
+                try {
+                    response = call.execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                        if (data != null) {
-                            speakersInfo = data.getSpeakersList();
-                            lecturesInfo = data.getSchedule().getLecturesList();
-                        }
+                ApiData data = response != null ? response.body() : null;
 
-                        saveData(db);
-                        restoreData(db);
-                        initAdapter();
-                    }
+                if (data != null) {
+                    speakersInfo = data.getSpeakersList();
+                    lecturesInfo = data.getSchedule().getLecturesList();
+                }
 
-                    @Override
-                    public void onFailure(Call<ApiData> call, Throwable t) {
-                        Toast.makeText(weakContext.get(),
-                                "Failed to load file from server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("Json Data Error", t.getMessage());
-                    }
-                });
+                saveData(db);
+                restoreData(db);
             } else {
                 restoreData(db);
-                initAdapter();
             }
 
             return null;
         }
 
-        private void initAdapter() {
+        @Override
+        protected void onPostExecute(Void aVoid) {
             adapter = new SpeakerRecyclerViewAdapter(
                     weakContext.get(),
                     speakersInfo,
