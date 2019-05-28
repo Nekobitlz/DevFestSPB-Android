@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -160,10 +161,10 @@ public class SpeakerDescriptionActivity extends AppCompatActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.speaker_title: {
-                Intent intent = new Intent(this, LectureDescriptionActivity.class);
-                intent.putExtra("lecture", currentLecture);
-                intent.putExtra("speaker", currentSpeaker);
-                startActivity(intent);
+                LectureFragment lectureFragment = LectureFragment.newInstance(currentLecture, currentSpeaker);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                lectureFragment.show(fragmentManager, "lectureFragment");
             }
             break;
 
