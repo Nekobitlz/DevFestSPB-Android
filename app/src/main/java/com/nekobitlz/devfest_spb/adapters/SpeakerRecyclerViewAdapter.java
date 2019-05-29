@@ -1,8 +1,9 @@
 package com.nekobitlz.devfest_spb.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,11 @@ import android.widget.TextView;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
-import com.nekobitlz.devfest_spb.views.SpeakerDescriptionActivity;
+import com.nekobitlz.devfest_spb.views.MainActivity;
+import com.nekobitlz.devfest_spb.views.SpeakerFragment;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
        Adapter that holds data and links it to the list
 */
 public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final static String FRAGMENT_TAG = "speaker_fragment";
 
     private ArrayList<SpeakerInfo> speakerInfo;
     private ArrayList<LectureInfo> lectureInfo;
@@ -107,13 +110,17 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SpeakerDescriptionActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                intent.putExtra("lecture", currentLecture);
-                intent.putExtra("speaker", currentSpeaker);
+                final MainActivity activity = (MainActivity) context;
+                SpeakerFragment speakerFragment = SpeakerFragment.newInstance(currentLecture, currentSpeaker);
 
-                context.startActivity(intent);
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, speakerFragment, FRAGMENT_TAG);
+                transaction.addToBackStack(null);
+
+                transaction.commit();
             }
         });
     }

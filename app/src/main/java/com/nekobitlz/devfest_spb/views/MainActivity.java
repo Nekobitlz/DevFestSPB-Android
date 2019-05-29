@@ -3,14 +3,9 @@ package com.nekobitlz.devfest_spb.views;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.view.View;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.adapters.SpeakerRecyclerViewAdapter;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
@@ -31,38 +26,28 @@ import java.util.ArrayList;
 /*
     Main menu on which is a list of lectures
 */
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity {
 
-    private LoadInfoTask loadInfoTask;
-    private RecyclerView speakersRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private final static String FRAGMENT_TAG = "speaker_list_fragment";
+
+    private SpeakerListFragment speakerListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        swipeRefreshLayout = findViewById(R.id.swiperefresh);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        if (savedInstanceState == null) {
+            speakerListFragment = SpeakerListFragment.newInstance();
 
-        speakersRecyclerView = findViewById(R.id.speakers_recycler_view);
-        speakersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        loadInfoTask = new LoadInfoTask(this, speakersRecyclerView);
-        loadInfoTask.execute();
-    }
-
-    @Override
-    protected void onDestroy() {
-        loadInfoTask.cancel(true);
-        loadInfoTask = null;
-        super.onDestroy();
-    }
-
-    @Override
-    public void onRefresh() {
-       new LoadInfoTask(this, speakersRecyclerView).execute();
-       swipeRefreshLayout.setRefreshing(false);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, speakerListFragment, FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            speakerListFragment = (SpeakerListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        }
     }
 
     /*
