@@ -1,5 +1,6 @@
 package com.nekobitlz.devfest_spb.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.nekobitlz.devfest_spb.R;
+import com.nekobitlz.devfest_spb.services.UpdateService;
 
 public class SpeakerListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -51,6 +53,8 @@ public class SpeakerListFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         new MainActivity.LoadInfoTask(getContext(), speakersRecyclerView).execute();
+        Intent serviceIntent = new Intent(getContext(), UpdateService.class);
+        getContext().startService(serviceIntent);
         swipeRefreshLayout.setRefreshing(false);
     }
 
