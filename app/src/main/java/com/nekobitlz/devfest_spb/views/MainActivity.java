@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, speakerListFragment, FRAGMENT_TAG)
-                    .addToBackStack(null)
                     .commit();
         } else {
             speakerListFragment = (SpeakerListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
