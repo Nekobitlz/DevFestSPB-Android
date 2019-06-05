@@ -1,6 +1,9 @@
 package com.nekobitlz.devfest_spb.views;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import com.nekobitlz.devfest_spb.database.AppDatabase;
 import com.nekobitlz.devfest_spb.network.ApiData;
 import com.nekobitlz.devfest_spb.network.NetworkModule;
 import com.nekobitlz.devfest_spb.network.ServerApi;
+import com.nekobitlz.devfest_spb.services.UpdateService;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -22,15 +26,17 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-/*
-    Main menu on which is a list of lectures
-*/
 public class MainActivity extends AppCompatActivity {
 
     private final static String FRAGMENT_TAG = "speaker_list_fragment";
 
     private SpeakerListFragment speakerListFragment;
+
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +53,28 @@ public class MainActivity extends AppCompatActivity {
         } else {
             speakerListFragment = (SpeakerListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         }
+
+        initAlarmManager();
     }
 
-    /*
-        Asynchronous data loading
-    */
+    private void initAlarmManager() {
+        Intent updateIntent = new Intent(MainActivity.this, UpdateService.class);
+        pendingIntent = PendingIntent.getService(MainActivity.this, 0,
+                updateIntent, 0);
+
+        // Set the alarm to start at approximately 3:00 a.m.
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 3);
+
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent);
+    }
+
     public static class LoadInfoTask extends AsyncTask<Void, Void, Void> {
 
         private ServerApi api;
