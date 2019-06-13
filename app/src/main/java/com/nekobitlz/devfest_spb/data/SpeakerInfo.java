@@ -108,7 +108,7 @@ public class SpeakerInfo implements Serializable {
     }
 
     public String getPosition() {
-        return jobTitle + company;
+        return jobTitle + getCompany();
     }
 
     public void setLinks(Links links) {
