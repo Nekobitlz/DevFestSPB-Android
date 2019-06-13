@@ -10,13 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
 import com.nekobitlz.devfest_spb.views.MainActivity;
 import com.nekobitlz.devfest_spb.views.SpeakerFragment;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,6 +31,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<SpeakerInfo> speakerInfo;
     private ArrayList<LectureInfo> lectureInfo;
     private Context context;
+    private MainActivity view;
 
     public SpeakerRecyclerViewAdapter(
             Context context,
@@ -41,6 +40,8 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.speakerInfo = speakerInfo;
         this.lectureInfo = lectureInfo;
         this.context = context;
+
+        view = (MainActivity) context;
     }
 
     /*
@@ -71,15 +72,14 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 imageName, "drawable", context.getPackageName()
         );
 
-        String flagImageName = "flag_" + currentSpeaker.getFlagImage();
+        String flagImageName = currentSpeaker.getFlagImage();
         int flagImage = context.getResources().getIdentifier(
                 flagImageName, "drawable", context.getPackageName()
         );
 
         //Setting all attributes in view
-        final String speakerName = currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName();
-        String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
-        String speakerPosition = currentSpeaker.getJobTitle() + company;
+        final String speakerName = currentSpeaker.getFullName();
+        String speakerPosition = currentSpeaker.getPosition();
         String speakerLocation = currentSpeaker.getLocation();
 
         final RecyclerView.ViewHolder finalViewHolder = viewHolder;
@@ -111,10 +111,9 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onClick(View v) {
 
-                final MainActivity activity = (MainActivity) context;
                 SpeakerFragment speakerFragment = SpeakerFragment.newInstance(currentLecture, currentSpeaker);
 
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                FragmentManager fragmentManager = view.getSupportFragmentManager();
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, speakerFragment, FRAGMENT_TAG);
@@ -143,6 +142,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             }
         }
 
+
         return null;
     }
 
@@ -150,6 +150,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         A class that stores information about used views
     */
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         private CircleImageView speakerImage;
         private CircleImageView speakerFlag;
         private TextView speakerName;

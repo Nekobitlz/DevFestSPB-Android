@@ -92,15 +92,23 @@ public class SpeakerInfo implements Serializable {
     }
 
     public String getCompany() {
-        return company;
+        return company.isEmpty() ? "" : " at " + company;
     }
 
     public String getFlagImage() {
-        return flagImage;
+        return "flag_" + flagImage;
     }
 
     public Links getLinks() {
         return links;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String getPosition() {
+        return jobTitle + company;
     }
 
     public void setLinks(Links links) {
