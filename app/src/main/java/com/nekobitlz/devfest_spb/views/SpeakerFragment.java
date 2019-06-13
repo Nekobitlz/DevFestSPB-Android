@@ -1,7 +1,6 @@
 package com.nekobitlz.devfest_spb.views;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,16 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.nekobitlz.devfest_spb.data.Tracks.*;
 
 public class SpeakerFragment extends Fragment implements View.OnClickListener {
 
@@ -106,18 +101,9 @@ public class SpeakerFragment extends Fragment implements View.OnClickListener {
        Installs information from the speaker lecture on views
    */
     private void setup(LectureInfo currentLecture) {
-        //Sets label background color
-        switch (currentLecture.getLabel().toLowerCase()) {
-            case ANDROID_NAME : speakerLabel.setBackgroundColor(Color.parseColor(ANDROID.getColor()));
-                break;
-            case FRONTEND_NAME : speakerLabel.setBackgroundColor(Color.parseColor(FRONTEND.getColor()));
-                break;
-            case COMMON_NAME : speakerLabel.setBackgroundColor(Color.parseColor(COMMON.getColor()));
-                break;
-        }
-
+        speakerLabel.setBackgroundColor(currentLecture.getBackgroundColor());
         speakerLabel.setText(currentLecture.getLabel());
-        speakerAddress.setText("Room " + currentLecture.getAddress());
+        speakerAddress.setText(currentLecture.getAddress());
         speakerTitle.setText(currentLecture.getTitle());
         speakerDate.setText(currentLecture.getDate());
     }
@@ -126,12 +112,12 @@ public class SpeakerFragment extends Fragment implements View.OnClickListener {
         Installs information from the selected speaker on views
     */
     private void setup(SpeakerInfo currentSpeaker) {
-        String company = currentSpeaker.getCompany().isEmpty() ? "" : " at " + currentSpeaker.getCompany();
+        String flagImageName = currentSpeaker.getFlagImage();
+
         final int speakerImageResource = getResources().getIdentifier(
                 currentSpeaker.getImage(), "drawable", getContext().getPackageName()
         );
 
-        String flagImageName = "flag_" + currentSpeaker.getFlagImage();
         int flagImage = getResources().getIdentifier(
                 flagImageName, "drawable", getContext().getPackageName()
         );
@@ -153,24 +139,21 @@ public class SpeakerFragment extends Fragment implements View.OnClickListener {
                 });
 
         speakerFlag.setImageResource(flagImage);
-        speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
-        speakerPosition.setText(currentSpeaker.getJobTitle() + company);
+        speakerName.setText(currentSpeaker.getFullName());
+        speakerPosition.setText(currentSpeaker.getPosition());
         speakerLocation.setText(currentSpeaker.getLocation());
         speakerDescription.setText(currentSpeaker.getAbout());
 
         // If speaker has link, it will be shown
         if (currentSpeaker.getLinks() != null) {
-            if (!currentSpeaker.getLinks().getTwitter().equals("null")) {
-                twitter.setVisibility(View.VISIBLE);
-            }
+            String twitterLink = currentSpeaker.getLinks().getTwitter();
+            twitter.setVisibility(currentSpeaker.getVisibility(twitterLink));
 
-            if (!currentSpeaker.getLinks().getTelegram().equals("null")) {
-                telegram.setVisibility(View.VISIBLE);
-            }
+            String telegramLink = currentSpeaker.getLinks().getTelegram();
+            telegram.setVisibility(currentSpeaker.getVisibility(telegramLink));
 
-            if (!currentSpeaker.getLinks().getGithub().equals("null")) {
-                github.setVisibility(View.VISIBLE);
-            }
+            String githubLink = currentSpeaker.getLinks().getGithub();
+            github.setVisibility(currentSpeaker.getVisibility(githubLink));
         }
     }
 

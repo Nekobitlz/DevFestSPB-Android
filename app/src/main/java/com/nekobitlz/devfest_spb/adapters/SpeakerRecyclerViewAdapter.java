@@ -64,7 +64,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         viewHolder = new ViewHolder(viewHolder.itemView);
         final SpeakerInfo currentSpeaker = speakerInfo.get(i);
-        final LectureInfo currentLecture = getCurrentLecture(currentSpeaker);
+        final LectureInfo currentLecture = view.getLectureBySpeaker(currentSpeaker);
 
         //Getting image from resources by image name
         String imageName = currentSpeaker.getImage();
@@ -130,20 +130,6 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         return speakerInfo.size();
-    }
-
-    /*
-        Gets a lecture from the name of the desired speaker
-    */
-    private LectureInfo getCurrentLecture(SpeakerInfo speakerInfo) {
-        for (LectureInfo lecture : lectureInfo) {
-            if (lecture.getSpeakerId().equals(speakerInfo.getId())) {
-                return lecture;
-            }
-        }
-
-
-        return null;
     }
 
     /*

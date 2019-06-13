@@ -1,25 +1,18 @@
 package com.nekobitlz.devfest_spb.views;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.TextView;
-
 import android.widget.Toast;
 import com.nekobitlz.devfest_spb.R;
 import com.nekobitlz.devfest_spb.data.LectureInfo;
 import com.nekobitlz.devfest_spb.data.SpeakerInfo;
-
-import static com.nekobitlz.devfest_spb.data.Tracks.*;
-import static com.nekobitlz.devfest_spb.data.Tracks.COMMON;
-import static com.nekobitlz.devfest_spb.data.Tracks.COMMON_NAME;
 
 public class LectureFragment extends DialogFragment implements View.OnClickListener {
 
@@ -85,24 +78,13 @@ public class LectureFragment extends DialogFragment implements View.OnClickListe
     }
 
     private void setup() {
-        //Sets lecture label background color
-        switch (currentLecture.getLabel().toLowerCase()) {
-            case ANDROID_NAME : lectureLabel.setBackgroundColor(Color.parseColor(ANDROID.getColor()));
-                break;
-            case FRONTEND_NAME : lectureLabel.setBackgroundColor(Color.parseColor(FRONTEND.getColor()));
-                break;
-            case COMMON_NAME : lectureLabel.setBackgroundColor(Color.parseColor(COMMON.getColor()));
-                break;
-        }
+        speakerName.setText(currentSpeaker.getFullName());
+        speakerDescription.setText(currentSpeaker.getPosition());
 
-        speakerName.setText(currentSpeaker.getFirstName() + " " + currentSpeaker.getLastName());
-        speakerDescription.setText(
-                currentSpeaker.getJobTitle() + " at " +
-                        currentSpeaker.getCompany() + " " + currentSpeaker.getLocation()
-        );
         lectureDate.setText(currentLecture.getDate());
         lectureLabel.setText(currentLecture.getLabel());
-        lectureAddress.setText("Room " + currentLecture.getAddress());
+        lectureLabel.setBackgroundColor(currentLecture.getBackgroundColor());
+        lectureAddress.setText(currentLecture.getAddress());
         lectureTitle.setText(currentLecture.getTitle());
         lectureDescription.setText(currentLecture.getDescription());
     }
