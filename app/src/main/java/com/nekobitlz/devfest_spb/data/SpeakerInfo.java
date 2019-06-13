@@ -5,10 +5,10 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
+import android.view.View;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -109,6 +109,13 @@ public class SpeakerInfo implements Serializable {
 
     public String getPosition() {
         return jobTitle + getCompany();
+    }
+
+    public int getVisibility(String link) {
+        if (link.equals("null"))
+            return View.GONE;
+        else
+            return View.VISIBLE;
     }
 
     public void setLinks(Links links) {

@@ -2,10 +2,15 @@ package com.nekobitlz.devfest_spb.data;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+
+import static com.nekobitlz.devfest_spb.data.Tracks.*;
+import static com.nekobitlz.devfest_spb.data.Tracks.COMMON;
+import static com.nekobitlz.devfest_spb.data.Tracks.COMMON_NAME;
 
 /*
     Class for storing lecture data
@@ -55,7 +60,7 @@ public class LectureInfo implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+        return "Room " + address;
     }
 
     public String getTitle() {
@@ -68,5 +73,15 @@ public class LectureInfo implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getBackgroundColor() {
+        switch (label.toLowerCase()) {
+            case ANDROID_NAME : return Color.parseColor(ANDROID.getColor());
+            case FRONTEND_NAME : return Color.parseColor(FRONTEND.getColor());
+            case COMMON_NAME : return Color.parseColor(COMMON.getColor());
+        }
+
+        return 0;
     }
 }
